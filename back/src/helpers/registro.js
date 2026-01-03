@@ -1,6 +1,7 @@
 export async function registrar(message, client, datos) {
   const chatId = message.from;
   const input = message.body.trim();
+
   switch (datos[chatId].fase) {
     case "inicio":
       await client.sendMessage(

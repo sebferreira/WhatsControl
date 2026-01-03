@@ -1,6 +1,6 @@
-2025/12/12-23:37:06.395 2d18 Reusing MANIFEST C:\Users\sebas\OneDrive\Escritorio\wsp-bot\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/MANIFEST-000001
-2025/12/12-23:37:06.397 2d18 Recovering log #3
-2025/12/12-23:37:06.398 2d18 Reusing old log C:\Users\sebas\OneDrive\Escritorio\wsp-bot\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/000003.log 
-2025/12/12-23:39:08.424 250c Level-0 table #5: started
-2025/12/12-23:39:08.436 250c Level-0 table #5: 19665 bytes OK
-2025/12/12-23:39:08.443 250c Delete type=0 #3
+2026/01/03-01:53:26.268 4728 Reusing MANIFEST C:\Users\sebas\OneDrive\Escritorio\wsp-bot\back\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/MANIFEST-000001
+2026/01/03-01:53:26.270 4728 Recovering log #4
+2026/01/03-01:53:26.271 4728 Reusing old log C:\Users\sebas\OneDrive\Escritorio\wsp-bot\back\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/000004.log 
+2026/01/03-01:55:27.026 447c Level-0 table #8: started
+2026/01/03-01:55:27.045 447c Level-0 table #8: 18635 bytes OK
+2026/01/03-01:55:27.066 447c Delete type=0 #4
