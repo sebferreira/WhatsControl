@@ -1,6 +1,0 @@
-2026/01/03-01:53:26.268 4728 Reusing MANIFEST C:\Users\sebas\OneDrive\Escritorio\wsp-bot\back\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/MANIFEST-000001
-2026/01/03-01:53:26.270 4728 Recovering log #4
-2026/01/03-01:53:26.271 4728 Reusing old log C:\Users\sebas\OneDrive\Escritorio\wsp-bot\back\.wwebjs_auth\session-client-one\Default\Local Storage\leveldb/000004.log 
-2026/01/03-01:55:27.026 447c Level-0 table #8: started
-2026/01/03-01:55:27.045 447c Level-0 table #8: 18635 bytes OK
-2026/01/03-01:55:27.066 447c Delete type=0 #4
