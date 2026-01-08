@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import {getMensajesByChatId} from "../../queryFn/query";
 import io from "socket.io-client";
 import {useParams} from "react-router-dom";
-const socket = io("http://localhost:3000");
+const socket = io("https://whatsapp-auto-p2eg.onrender.com");
 export function MessageSection() {
   const [mensajes, setMensajes] = useState([]);
   const [PreviousMessages, setPreviousMessages] = useState([]);

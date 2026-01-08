@@ -29,7 +29,17 @@ export const enviarMensaje = async (req, res) => {
   try {
     const {chatId: id_chat} = req.params;
     const {mensaje} = req.body;
+    const io = req.io;
     const mensajeCreado = await responderYGuardar(id_chat, mensaje, "agente");
+    io.emit("nuevo_mensaje", {
+      id_chat: mensajeCreado.id_chat,
+      mensaje: mensajeCreado.mensaje,
+      body: mensajeCreado.mensaje,
+      to: mensajeCreado.to,
+      fromMe: true,
+      createdAt: mensajeCreado.createdAt,
+      pushName: "Agente",
+    });
     res.json(mensajeCreado);
   } catch (error) {
     console.error(error);
