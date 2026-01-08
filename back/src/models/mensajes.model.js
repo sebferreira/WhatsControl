@@ -13,6 +13,9 @@ const Mensaje = sequelize.define(
     mensaje: {
       type: DataTypes.TEXT,
     },
+    to: {
+      type: DataTypes.STRING,
+    },
     fromMe: {
       type: DataTypes.BOOLEAN,
     },

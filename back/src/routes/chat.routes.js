@@ -3,7 +3,6 @@ import express from "express";
 import {revisarCookie} from "../middlewares/authorization.middleware.js";
 
 import {
-  agregarUserChat,
   asignarChat,
   createChat,
   getChatById,

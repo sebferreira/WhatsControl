@@ -1,5 +1,4 @@
-import Chat from "../models/chats.model";
-import Mensaje from "../models/mensajes.model";
+import Chat from "../models/chats.model.js";
 
 export const getChats = async (req, res) => {
   try {
@@ -17,7 +16,7 @@ export const getChatById = async (req, res, next) => {
   try {
     const {chatId: id_chat} = req.params;
     const chat = await Chat.findByPk(id_chat);
-    if (!chat) return res.status(404).json(["No se han encontrado chats"]);
+    if (!chat) return res.status(404).json(["No se encontro chat"]);
     res.json(chat);
   } catch (error) {
     next(error);

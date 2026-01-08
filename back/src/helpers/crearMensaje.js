@@ -1,20 +1,25 @@
 import Mensaje from "../models/mensajes.model.js";
 import {registrar} from "./registro.js";
+import responderYGuardar from "./EnviarYGuardarMensaje.js";
+import Chat from "../models/chats.model.js";
+import Cliente from "../models/clientes.model.js";
 
 export async function enviarMensajes(message, client, datos, chat) {
   if (message.fromMe) return;
-
   const input = message.body.trim();
   const chatId = message.from;
+  let opcion = "";
   if (!datos[chatId]) {
     datos[chatId] = {
       fase: "inicio",
       info: {},
     };
   }
+  await Chat.update({ultimoMensaje: message.body}, {where: {id_chat: chatId}});
   await Mensaje.create({
     id_chat: chatId,
     mensaje: message.body,
+    to: message.to,
     fromMe: message.fromMe,
     etapa: datos[chatId].fase,
   });
@@ -25,47 +30,78 @@ export async function enviarMensajes(message, client, datos, chat) {
     await chat.update({usuario});
     switch (input) {
       case "1":
-        await client.sendMessage(message.from, "ventas");
+        await responderYGuardar(client, chatId, "ventas", datos[chatId].fase);
         datos[chatId].fase = "confirmar";
 
         break;
 
       case "2":
-        await client.sendMessage(message.from, "compras");
+        await responderYGuardar(client, chatId, "compras", datos[chatId].fase);
         datos[chatId].fase = "confirmar";
 
         break;
 
       case "3":
-        await client.sendMessage(message.from, "los pagos se realizan con mp");
+        await responderYGuardar(
+          client,
+          chatId,
+          "los pagos se realizan con mp",
+          datos[chatId].fase
+        );
         datos[chatId].fase = "confirmar";
 
         break;
       default:
-        await client.sendMessage(
-          message.from,
-          "Debes elegir una opcion: 1.ventas 2.compra 3.pagos"
+        await responderYGuardar(
+          client,
+          chatId,
+          "Debes elegir una opcion: 1.ventas 2.compra 3.pagos",
+          datos[chatId].fase
         );
         break;
     }
+    opcion = input;
   }
 
   if (datos[chatId].fase === "confirmar") {
-    await client.sendMessage(
-      message.from,
-      ` nombre:${datos[chatId].info.nombre} apellido:${datos[chatId].info.apellido} DNI:${datos[chatId].info.dni} Si lo anterior es correcto escriba "confirmar", de lo contrario escriba "reintentar"`
+    await responderYGuardar(
+      client,
+      chatId,
+      ` nombre:${datos[chatId].info.nombre} apellido:${datos[chatId].info.apellido} DNI:${datos[chatId].info.dni} Si lo anterior es correcto escriba "confirmar", de lo contrario escriba "reintentar"`,
+      datos[chatId].fase
     );
     datos[chatId].fase = "pendiente";
   }
 
   if (datos[chatId].fase === "pendiente") {
     if (input === "reintentar") {
-      await client.sendMessage(message.from, "Por favor ingresa tu nombre:");
+      await responderYGuardar(
+        client,
+        chatId,
+        "Por favor ingresa tu nombre:",
+        datos[chatId].fase
+      );
       datos[chatId].fase = "Ingresar_Nombre";
     }
 
     if (input === "confirmar") {
-      await client.sendMessage(message.from, "Gracias por registrarse");
+      await Cliente.create(
+        {
+          name: datos[chatId].info.nombre,
+          apellido: datos[chatId].info.apellido,
+          dni: datos[chatId].info.dni,
+          categoria: opcion,
+          id_chat: chatId,
+        },
+        {where: {id_chat: chatId}}
+      );
+
+      await responderYGuardar(
+        client,
+        chatId,
+        "Gracias por registrarse",
+        datos[chatId].fase
+      );
       datos[chatId].fase = "confirmado";
     }
   }

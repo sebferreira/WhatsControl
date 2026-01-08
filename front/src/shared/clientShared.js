@@ -21,7 +21,8 @@ const handleCustomApiRequest = async ({
     body = body ? JSON.stringify(body) : undefined;
   }
   if (withToken) {
-    const Authorization = `Bearer ${cookie.userRegistered}`;
+    console.log(cookie);
+    const Authorization = `Bearer ${cookie.token}`;
     headers = {...headers, Authorization};
   }
 

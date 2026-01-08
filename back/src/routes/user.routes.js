@@ -6,8 +6,7 @@ import {
   loginUser,
   logoutUser,
   verifyToken,
-  updateUser,
-} from "../controllers/user.controller.js";
+} from "../controllers/registerUser.controller.js";
 import {revisarCookie} from "../middlewares/authorization.middleware.js";
 
 const router = express.Router();
@@ -17,7 +16,6 @@ router.post("/login", validateSchema(loginSchema), loginUser);
 router.post("/logout", logoutUser);
 router.get("/verify/", verifyToken);
 
-router.patch("/profile/:username", revisarCookie, updateUser);
 /* router.get("/", (req, res) =>
   res.json({
     message: "Hi",

@@ -36,7 +36,7 @@ export default function Signup() {
   });
 
   useEffect(() => {
-    if (isAuthRegistered) navigate("/auth");
+    if (isAuthRegistered) navigate("/");
   }, [isAuthRegistered, navigate]);
 
   return (

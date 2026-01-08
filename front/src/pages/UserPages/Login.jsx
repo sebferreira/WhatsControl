@@ -26,7 +26,7 @@ export default function Signin() {
   });
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/tables");
+      navigate("/chats");
     }
   }, [isAuthenticated, navigate]);
   return (
@@ -39,7 +39,7 @@ export default function Signin() {
       sx={{minHeight: "100vh", height: "100vh"}}>
       <Card
         sx={{
-          width: {xs: "100vw", md: "60rem", lg: "70rem"},
+          width: {xs: "100vw", md: "60rem", lg: "90rem"},
           height: {xs: "100vh", md: "70vh"},
           mx: "auto",
           minHeight: "500px",

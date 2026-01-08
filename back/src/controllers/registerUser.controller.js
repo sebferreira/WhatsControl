@@ -30,6 +30,12 @@ export const registerUser = async (req, res, next) => {
     };
 
     const token = jwt.sign({username}, process.env.SECRET_KEY, {});
+    await User.create({
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      estado: "Aprobado",
+    });
     res.json({user, token});
   } catch (error) {
     next(error);
@@ -86,6 +92,7 @@ export const profileUser = (req, res) => {
 
 export const verifyToken = async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
+  console.log(token);
   if (!token) return res.status(401).json(["Unauthorized"]);
   jwt.verify(token, process.env.SECRET_KEY, async (err, user) => {
     if (err) return res.status(401).json(["Unauthorized"]);

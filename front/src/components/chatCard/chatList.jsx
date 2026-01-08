@@ -1,4 +1,4 @@
-/* import {
+import {
   ListItem,
   ListItemText,
   ListItemButton,
@@ -6,11 +6,10 @@
   Box,
 } from "@mui/material";
 import {Link} from "react-router-dom";
-import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export default function MessageList({board}) {
-  const dash = <SpaceDashboardOutlinedIcon />;
+export default function ChatList({chat}) {
   return (
     <ListItem
       disablePadding
@@ -36,10 +35,11 @@ export default function MessageList({board}) {
       }}>
       <ListItemButton
         component={Link}
-        to={`/boards/${board.id_board}`}
+        to={`/chats/${chat.id_chat}`}
         onClick={() => {
-          sessionStorage.setItem("previousPath", "/tables");
-          sessionStorage.setItem("actualPath", `/boards/${board.id_board}`);
+          console.log(chat);
+          sessionStorage.setItem("previousPath", "/chats");
+          sessionStorage.setItem("actualPath", `/chats/${chat.id_chat}`);
         }}
         sx={{
           color: "#1e1e1e",
@@ -62,10 +62,17 @@ export default function MessageList({board}) {
             display: "flex",
             alignItems: "center",
           }}>
-          <ListItemIcon>{dash}</ListItemIcon>
+          <ListItemIcon>
+            <AccountCircleRoundedIcon
+              sx={{
+                color: "#757575",
+                fontSize: "2.5rem",
+              }}
+            />
+          </ListItemIcon>
           <Box>
             <ListItemText
-              primary={board.name}
+              primary={chat.id_chat /* .slice(3, -5) */}
               sx={{
                 "& .MuiTypography-root": {
                   width: " 10rem",
@@ -76,7 +83,7 @@ export default function MessageList({board}) {
               }}
             />
             <ListItemText
-              primary={new Date(board.updatedAt).toLocaleString()}
+              primary={chat.usuario_asignado}
               style={{
                 fontSize: "0.8rem",
                 color: "#757575",
@@ -94,4 +101,3 @@ export default function MessageList({board}) {
     </ListItem>
   );
 }
- */
