@@ -1,5 +1,5 @@
 import responderYGuardar from "./EnviarYGuardarMensaje.js";
-export async function registrar(message, datos) {
+export async function registrar(message, datos, io) {
   const chatId = message.from;
   const input = message.body.trim();
 
@@ -8,7 +8,8 @@ export async function registrar(message, datos) {
       await responderYGuardar(
         chatId,
         "Hola, empecemos el registro. Por favor ingresa tu nombre:",
-        datos[chatId].fase
+        datos[chatId].fase,
+        io
       );
 
       datos[chatId].fase = "Ingresar_Nombre";
@@ -20,7 +21,8 @@ export async function registrar(message, datos) {
       await responderYGuardar(
         chatId,
         "¡Un gusto " + input + "! Ahora por favor escribe tu apellido:",
-        datos[chatId].fase
+        datos[chatId].fase,
+        io
       );
       break;
 
@@ -31,7 +33,8 @@ export async function registrar(message, datos) {
       await responderYGuardar(
         chatId,
         "Ahora por favor escribe tu DNI:",
-        datos[chatId].fase
+        datos[chatId].fase,
+        io
       );
       break;
 
@@ -41,7 +44,8 @@ export async function registrar(message, datos) {
       await responderYGuardar(
         chatId,
         "¡Registro completado!",
-        datos[chatId].fase
+        datos[chatId].fase,
+        io
       );
       break;
   }

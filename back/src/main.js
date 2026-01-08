@@ -113,7 +113,7 @@ app.post("/webhook", async (req, res) => {
           pushName: msgAdaptado._data.notifyName,
         });
 
-        await enviarMensajes(msgAdaptado, datos, chat);
+        await enviarMensajes(msgAdaptado, datos, chat, io);
       }
     }
 

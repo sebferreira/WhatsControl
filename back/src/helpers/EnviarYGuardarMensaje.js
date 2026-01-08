@@ -2,7 +2,12 @@ import Chat from "../models/chats.model.js";
 import Mensaje from "../models/mensajes.model.js";
 import {enviarMensajeMeta} from "./whatsappApi.js";
 
-export default async function responderYGuardar(chatId, texto, etapaActual) {
+export default async function responderYGuardar(
+  chatId,
+  texto,
+  etapaActual,
+  io
+) {
   await enviarMensajeMeta(chatId, texto);
 
   await Chat.update({ultimoMensaje: texto}, {where: {id_chat: chatId}});
@@ -14,5 +19,16 @@ export default async function responderYGuardar(chatId, texto, etapaActual) {
     fromMe: true,
     etapa: etapaActual,
   });
+  if (io) {
+    io.emit("nuevo_mensaje", {
+      id_chat: nuevoMensaje.id_chat,
+      mensaje: nuevoMensaje.mensaje,
+      body: nuevoMensaje.mensaje,
+      to: nuevoMensaje.to,
+      fromMe: true,
+      createdAt: nuevoMensaje.createdAt,
+      pushName: "Bot/Agente",
+    });
+  }
   return nuevoMensaje;
 }

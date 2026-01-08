@@ -15,8 +15,9 @@ import FeedRoundedIcon from "@mui/icons-material/FeedRounded";
 import {useParams} from "react-router-dom";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import ModalChat from "../../modals/ModalChat/ModalChat";
+import {memo} from "react";
 
-export default function ChatMenu({chat}) {
+function ChatMenu({chat}) {
   const params = useParams();
   const [openModalAsignar, setOpenModalAsignar] = useState(false);
   const [openModalEstado, setOpenModalEstado] = useState(false);
@@ -152,3 +153,5 @@ export default function ChatMenu({chat}) {
     </>
   );
 }
+
+export default memo(ChatMenu);

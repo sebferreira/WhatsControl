@@ -1,10 +1,10 @@
 import {Box, Container, Typography} from "@mui/material";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState, memo} from "react";
 import {getMensajesByChatId} from "../../queryFn/query";
 import io from "socket.io-client";
 import {useParams} from "react-router-dom";
 const socket = io("https://whatsapp-auto-p2eg.onrender.com");
-export function MessageSection() {
+export const MessageSection = memo(function MessageSection() {
   const [mensajes, setMensajes] = useState([]);
   const [PreviousMessages, setPreviousMessages] = useState([]);
   const params = useParams();
@@ -28,19 +28,33 @@ export function MessageSection() {
   useEffect(() => {
     const handleNewMessage = (mensaje) => {
       console.log("Llegó mensaje nuevo:", mensaje);
+      let fechaFinal;
+      const fechaEntrante =
+        mensaje.createdAt || mensaje.timestamp || Date.now();
+
+      if (!isNaN(fechaEntrante)) {
+        const timestamp = Number(fechaEntrante);
+        fechaFinal = new Date(
+          timestamp < 100000000000 ? timestamp * 1000 : timestamp
+        );
+      } else {
+        fechaFinal = new Date(fechaEntrante);
+      }
+
+      if (isNaN(fechaFinal.getTime())) {
+        fechaFinal = new Date();
+      }
+      // -------------------------
       const mensajeFormateado = {
         id: Date.now() + Math.random(),
         id_chat: mensaje.id_chat,
         mensaje: mensaje.body || mensaje.mensaje,
         to: mensaje.to,
         fromMe: mensaje.fromMe,
-        createdAt: mensaje.createdAt
-          ? new Date(mensaje.createdAt * 1000).toISOString()
-          : new Date().toISOString(),
+        createdAt: fechaFinal.toISOString(),
       };
 
       setMensajes((prev) => [...prev, mensajeFormateado]);
-      console.log(mensaje);
     };
 
     socket.on("nuevo_mensaje", handleNewMessage);
@@ -51,11 +65,12 @@ export function MessageSection() {
   const messagesEndRef = useRef(null);
   /*  const filtrarPorId = mensajes.filter((mensaje) => {
     return mensaje.id_chat === params.chatId || mensaje.to === params.chatId;
-  });
-  const mensajesOrdenadosPorHorario = filtrarPorId.sort((a, b) => {
-    return new Date(a.createdAt) - new Date(b.createdAt);
-  });
-  const mensajesConcatenados = PreviousMessages.concat(mensajesOrdenadosPorHorario); */
+    });
+    const mensajesOrdenadosPorHorario = filtrarPorId.sort((a, b) => {
+      return new Date(a.createdAt) - new Date(b.createdAt);
+      });
+      const mensajesConcatenados = PreviousMessages.concat(mensajesOrdenadosPorHorario); */
+  console.log(mensajes);
   const MensajesfiltradosPorId = mensajes.filter((mensaje) => {
     return mensaje.id_chat === params.chatId || mensaje.to === params.chatId;
   });
@@ -91,76 +106,78 @@ export function MessageSection() {
           hour: "2-digit",
           minute: "2-digit",
         });
-        return (
-          <>
-            {mensaje.fromMe ? (
-              <Box
-                key={mensaje.id}
+        if (mensaje.fromMe) {
+          return (
+            <Box
+              key={mensaje.id} // LA KEY VA AQUÍ
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                padding: "10px",
+                marginRight: "2rem",
+              }}>
+              <Typography
+                variant="body1"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
+                  color: "white",
+                  backgroundColor: "#3B82F6",
+                  borderRadius: "10px",
                   padding: "10px",
-                  marginRight: "2rem",
+                  maxWidth: "60%",
+                  wordWrap: "break-word",
                 }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "white",
-                    backgroundColor: "#3B82F6",
-                    borderRadius: "10px",
-                    padding: "10px",
-                    maxWidth: "60%",
-                  }}>
-                  {mensaje.mensaje || mensaje.body}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "gray",
-                    fontSize: "0.75rem",
-                    marginTop: "5px",
-                  }}>
-                  {hora}
-                </Typography>
-              </Box>
-            ) : (
-              <Box
-                key={mensaje.id}
+                {mensaje.mensaje || mensaje.body}
+              </Typography>
+              <Typography
+                variant="body2"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  padding: "10px",
-                  marginLeft: "2rem",
+                  color: "gray",
+                  fontSize: "0.75rem",
+                  marginTop: "5px",
                 }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    maxWidth: "60%",
-                    color: "white",
-                    backgroundColor: "#434548ff",
-                    borderRadius: "10px",
-                    padding: "10px",
-                  }}>
-                  {mensaje.mensaje}
-                </Typography>{" "}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "gray",
-                    fontSize: "0.75rem",
-                    marginTop: "5px",
-                  }}>
-                  {hora}
-                </Typography>
-              </Box>
-            )}
-          </>
-        );
+                {hora}
+              </Typography>
+            </Box>
+          );
+        } else {
+          return (
+            <Box
+              key={mensaje.id} // LA KEY VA AQUÍ
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                padding: "10px",
+                marginLeft: "2rem",
+              }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  maxWidth: "60%",
+                  color: "white",
+                  backgroundColor: "#434548ff",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  wordWrap: "break-word",
+                }}>
+                {mensaje.mensaje}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "gray",
+                  fontSize: "0.75rem",
+                  marginTop: "5px",
+                }}>
+                {hora}
+              </Typography>
+            </Box>
+          );
+        }
       })}
 
       <div ref={messagesEndRef} />
     </Box>
   );
-}
+});
