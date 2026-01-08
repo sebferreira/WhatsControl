@@ -83,7 +83,7 @@ export async function enviarMensajes(message, datos, chat) {
     if (input === "confirmar") {
       await Cliente.create(
         {
-          name: datos[chatId].info.nombre,
+          nombre: datos[chatId].info.nombre,
           apellido: datos[chatId].info.apellido,
           dni: datos[chatId].info.dni,
           categoria: opcion,
