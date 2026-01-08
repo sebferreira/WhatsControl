@@ -5,7 +5,11 @@ dotenv.config();
 export const enviarMensajeMeta = async (numero, texto) => {
   try {
     const url = `https://graph.facebook.com/v21.0/${process.env.META_PHONE_ID}/messages`;
-    console.log(numero, texto);
+    let numeroFinal = numero;
+
+    if (numero === "5491125542611") {
+      numeroFinal = "54111525542611";
+    }
     const config = {
       headers: {
         Authorization: `Bearer ${process.env.VERIFY_TOKEN_PHONE}`,
@@ -14,7 +18,7 @@ export const enviarMensajeMeta = async (numero, texto) => {
     };
     const data = {
       messaging_product: "whatsapp",
-      to: numero,
+      to: numeroFinal,
       type: "text",
       text: {body: texto},
     };
