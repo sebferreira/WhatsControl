@@ -13,6 +13,7 @@ import routerMsj from "./routes/mensajes.routes.js";
 import routerClient from "./routes/cliente.routes.js";
 
 import {enviarMensajes} from "./helpers/crearMensaje.js";
+import {enviarMensajeMeta} from "./whatsappApi.js";
 
 const app = express();
 const httpServer = createServer(app);

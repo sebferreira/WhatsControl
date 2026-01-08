@@ -1,5 +1,6 @@
 import Chat from "../models/chats.model.js";
 import Mensaje from "../models/mensajes.model.js";
+import {enviarMensajeMeta} from "./whatsappApi.js";
 
 export default async function responderYGuardar(chatId, texto, etapaActual) {
   await enviarMensajeMeta(chatId, texto);
