@@ -8,7 +8,6 @@ export async function enviarMensajes(message, datos, chat) {
   if (message.fromMe) return;
   const input = message.body.trim();
   const chatId = message.from;
-  let opcion = "";
   if (!datos[chatId]) {
     datos[chatId] = {
       fase: "inicio",
@@ -30,25 +29,28 @@ export async function enviarMensajes(message, datos, chat) {
     await chat.update({usuario});
     switch (input) {
       case "1":
+        datos[chatId].info.categoria = "ventas";
+
         await responderYGuardar(chatId, "ventas", datos[chatId].fase);
         datos[chatId].fase = "confirmar";
-
         break;
 
       case "2":
+        datos[chatId].info.categoria = "compras";
+
         await responderYGuardar(chatId, "compras", datos[chatId].fase);
         datos[chatId].fase = "confirmar";
-
         break;
 
       case "3":
+        datos[chatId].info.categoria = "pagos";
+
         await responderYGuardar(
           chatId,
           "los pagos se realizan con mp",
           datos[chatId].fase
         );
         datos[chatId].fase = "confirmar";
-
         break;
       default:
         await responderYGuardar(
@@ -58,7 +60,6 @@ export async function enviarMensajes(message, datos, chat) {
         );
         break;
     }
-    opcion = input;
   }
 
   if (datos[chatId].fase === "confirmar") {
@@ -86,7 +87,7 @@ export async function enviarMensajes(message, datos, chat) {
           nombre: datos[chatId].info.nombre,
           apellido: datos[chatId].info.apellido,
           dni: datos[chatId].info.dni,
-          categoria: opcion,
+          categoria: datos[chatId].info.categoria,
           id_chat: chatId,
         },
         {where: {id_chat: chatId}}
