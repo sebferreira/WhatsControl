@@ -36,7 +36,7 @@ export default function ChatDrawer({chats}) {
             direction: "ltr",
             marginBottom: "1rem",
           }}>
-          {chats.mensaje === "No se han encontrado chats" && (
+          {chats.mensaje && (
             <ListItem
               disablePadding
               sx={{
@@ -79,7 +79,7 @@ export default function ChatDrawer({chats}) {
               />
             </ListItem>
           )}
-          {chats.mensaje !== "No se han encontrado chats" && (
+          {!chats.mensaje  && (
             <ListItem
               disablePadding
               sx={{
@@ -96,7 +96,7 @@ export default function ChatDrawer({chats}) {
             </ListItem>
           )}
 
-          {chats.mensaje !== "No se han encontrado chats" &&
+          {!chats.mensaje&&
             chats.map((item) => {
               if (item.id_chat === params.chatId) {
                 return (

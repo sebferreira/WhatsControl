@@ -22,7 +22,7 @@ export function ChatWithoutParams({chats}) {
             alignItems: "center",
             width: "100%",
           }}>
-          {chats.mensaje === "No se han encontrado chats" && (
+          {chats.mensaje && (
             <Box
               sx={{
                 marginTop: "2rem",
@@ -50,7 +50,7 @@ export function ChatWithoutParams({chats}) {
           )}
         </Box>
 
-        {chats.mensaje !== "No se han encontrado chats" && (
+        {!chats.mensaje && (
           <>
             <Typography
               component="p"
