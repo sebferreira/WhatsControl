@@ -3,6 +3,7 @@ import Cliente from "../models/clientes.model.js";
 export const getClientes = async (req, res) => {
   try {
     const userToken = req.user;
+
     if (userToken.role !== "admin")
       return res.status(401).json(["Unauthorized"]);
     const clientes = await Cliente.findAll();
