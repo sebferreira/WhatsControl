@@ -6,7 +6,7 @@ import Navbar from "../navbar/Navbar";
 
 export function ChatWithoutParams({chats, mensajes}) {
   sessionStorage.setItem("actualPath", "/chats");
-  console.log(chats);
+
   return (
     <>
       <Box
@@ -107,8 +107,6 @@ export function ChatWithoutParams({chats, mensajes}) {
             sx: {
               backgroundColor: "transparent",
               color: "white",
-              /*  borderRight: 0, */
-              /*  width: 560, */
               marginTop: "5rem",
               overflowY: "auto",
               boxShadow: "0 10px 30px rgba(0,0,0,0.4);",

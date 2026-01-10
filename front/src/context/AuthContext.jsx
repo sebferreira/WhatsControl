@@ -21,17 +21,12 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(true);
 
   const signup = async (value) => {
-    if (Cookies.get("userRegistered")) {
-      Cookies.remove("userRegistered");
-    }
     const data = await signUp(value);
     if (data.length > 0) {
       return setRegisterErrors(data);
     }
-    setUser(data.user);
     setIsAuthRegistered(true);
     setRegisterErrors([]);
-    Cookies.set("userRegistered", data.token);
   };
 
   const signin = async (value) => {
@@ -85,13 +80,14 @@ export const AuthProvider = ({children}) => {
         setLoading(false);
         return;
       }
+      console.log(user, data);
       setUser(data);
       setIsAuthenticated(true);
       setLoading(false);
     }
     checkLogin();
   }, []);
-
+  console.log(user);
   return (
     <AuthContext.Provider
       value={{

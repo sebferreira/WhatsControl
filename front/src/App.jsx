@@ -1,19 +1,18 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {AuthProvider} from "./context/AuthContext";
-import HomeAuth from "./protectedRoutes/HomeAuth";
-import {Button} from "@mui/material";
 import Signup from "./pages/UserPages/Register";
 import Signin from "./pages/UserPages/Login";
 import {ChatPage} from "./pages/ChatsPage/ChatPage";
 import Navbar from "./components/navbar/Navbar";
 import ClientsPage from "./pages/ClientsPage/ClientsPage";
+import AdminProtectedRoutes from "./protectedRoutes/adminProtectedRoutes";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<HomeAuth />}>
+          <Route element={<AdminProtectedRoutes />}>
             <Route
               path="/register"
               element={
@@ -31,6 +30,29 @@ function App() {
                       width: "100vw",
                     }}>
                     <Signup />
+                  </main>
+                </>
+              }
+            />
+            <Route
+              path="/clientes"
+              element={
+                <>
+                  <main
+                    style={{
+                      objectFit: "cover",
+                      height: "100vh",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "69%",
+                      backgroundAttachment: "scroll",
+                      overflow: "hidden",
+                      justifyContent: "center",
+                      /*   backgroundColor: "#fff", */
+                      width: "100vw",
+                    }}>
+                    {" "}
+                    <Navbar />
+                    <ClientsPage />
                   </main>
                 </>
               }
@@ -55,29 +77,7 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/clientes"
-            element={
-              <>
-                <main
-                  style={{
-                    objectFit: "cover",
-                    height: "100vh",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "69%",
-                    backgroundAttachment: "scroll",
-                    overflow: "hidden",
-                    justifyContent: "center",
-                    /*   backgroundColor: "#fff", */
-                    width: "100vw",
-                  }}>
-                  {" "}
-                  <Navbar />
-                  <ClientsPage />
-                </main>
-              </>
-            }
-          />
+
           <Route
             path="/chats"
             element={

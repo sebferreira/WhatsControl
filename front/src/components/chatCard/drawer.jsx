@@ -107,16 +107,16 @@ export default function ChatDrawer({chats, mensajes}) {
 
           {!chats.mensaje &&
             chats.map((item) => {
-              if (mensajes.length > 0) {
-                const filterMessages = mensajes.filter(
-                  (message) => message.id_chat === item.id_chat
-                );
-                const lastMessage = filterMessages[filterMessages.length - 1];
-                if (lastMessage) {
-                  item.ultimoMensaje = lastMessage.mensaje;
-                }
-              }
               if (item.id_chat === params.chatId) {
+                if (mensajes.length > 0) {
+                  const filterMessages = mensajes.filter(
+                    (message) => message.id_chat === item.id_chat
+                  );
+                  const lastMessage = filterMessages[filterMessages.length - 1];
+                  if (lastMessage) {
+                    item.ultimoMensaje = lastMessage.mensaje;
+                  }
+                }
                 return (
                   <ListItem
                     disablePadding

@@ -1,7 +1,8 @@
 import {useState} from "react";
 import {Box, TextField, Button} from "@mui/material";
 import {useForm} from "react-hook-form";
-import {enviarMSJ} from "../../queryFn/query.js"; // Ajusta la ruta según tu carpeta
+import {enviarMSJ} from "../../queryFn/query.js";
+
 import {useParams} from "react-router-dom";
 
 export function ChatInput() {
@@ -10,13 +11,10 @@ export function ChatInput() {
   const params = useParams();
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!texto.trim()) return; // Evitar envíos vacíos
+    if (!texto.trim()) return;
     const mensajeAEnviar = texto;
-
-    // Limpiamos antes de enviar para sensación de rapidez
     setTexto("");
 
-    // Enviamos
     data.mensaje = mensajeAEnviar;
     await enviarMSJ(data, params.chatId);
   });
@@ -57,8 +55,6 @@ export function ChatInput() {
             backgroundColor: "#19181d",
           }}
           sx={{
-            // ... Tus estilos del TextField ...
-            // (He omitido los estilos largos para ahorrar espacio aquí, cópialos de tu código original)
             display: "block",
             paddingLeft: "0.5rem",
             height: "100%",
@@ -87,7 +83,7 @@ export function ChatInput() {
         {texto && (
           <Button
             disabled={!texto}
-            onClick={onSubmit} // Ojo: en form type submit no hace falta onClick, pero lo dejo como lo tenías
+            onClick={onSubmit}
             variant="contained"
             type="submit"
             style={{

@@ -14,7 +14,10 @@ export const registerUser = async (req, res, next) => {
       email,
       password: passwordSended,
       confirmPassword,
+      role,
     } = req.body;
+    const {user: userToken} = req.user;
+    if (!userToken !== "admin") return res.status(401).json(["Unauthorized"]);
     const userFound = await User.findOne({where: {username}});
     if (userFound) {
       return res.status(400).json(["El usuario ya existe"]);
@@ -27,6 +30,7 @@ export const registerUser = async (req, res, next) => {
       username,
       email,
       password: hashedPassword,
+      role,
     };
 
     const token = jwt.sign({username}, process.env.SECRET_KEY, {});
@@ -35,6 +39,7 @@ export const registerUser = async (req, res, next) => {
       email: user.email,
       password: user.password,
       estado: "Aprobado",
+      role: user.role,
     });
     res.json({user, token});
   } catch (error) {

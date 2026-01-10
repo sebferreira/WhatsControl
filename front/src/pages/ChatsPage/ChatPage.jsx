@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import {getChats} from "../../queryFn/query";
 import {useParams} from "react-router-dom";
 import {ChatWithParams} from "../../components/chatWithParams/ChatWithParams";
@@ -9,6 +9,12 @@ export function ChatPage() {
   const [chats, setChats] = useState([]);
   const [mensajes, setMensajes] = useState([]);
   const params = useParams();
+  const chatIdRef = useRef(params.chatId);
+  useEffect(() => {
+    chatIdRef.current = params.chatId;
+    setMensajes([]);
+  }, [params.chatId]);
+
   const getAllChats = async () => {
     const data = await getChats();
     if (data.length === 0) {
@@ -22,7 +28,6 @@ export function ChatPage() {
   }, []);
   useEffect(() => {
     const handleNewMessage = (mensaje) => {
-      console.log("Llegó mensaje nuevo:", mensaje);
       let fechaFinal;
       const fechaEntrante =
         mensaje.createdAt || mensaje.timestamp || Date.now();
@@ -39,10 +44,8 @@ export function ChatPage() {
       if (isNaN(fechaFinal.getTime())) {
         fechaFinal = new Date();
       }
-      // -------------------------
-      console.log(mensaje);
       const mensajeFormateado = {
-        id: mensaje.id || Date.now() + Math.random(),
+        id: mensaje.id_mensaje || mensaje.id,
         id_chat: mensaje.id_chat,
         mensaje: mensaje.body || mensaje.mensaje,
         to: mensaje.to,
@@ -50,7 +53,35 @@ export function ChatPage() {
         createdAt: fechaFinal.toISOString(),
       };
 
-      setMensajes((prev) => [...prev, mensajeFormateado]);
+      const idDelChatDelMensaje = mensajeFormateado.id_chat;
+      setChats((prevChats) => {
+        const chatExistente = prevChats.find(
+          (c) => c.id_chat === idDelChatDelMensaje
+        );
+        const restoChats = prevChats.filter(
+          (c) => c.id_chat !== idDelChatDelMensaje
+        );
+
+        if (chatExistente) {
+          const chatActualizado = {
+            ...chatExistente,
+            ultimoMensaje: mensajeFormateado.mensaje,
+            updatedAt: new Date().toISOString(),
+          };
+          return [chatActualizado, ...restoChats];
+        } else {
+          return prevChats;
+        }
+      });
+      const chatAbiertoActualmente = chatIdRef.current;
+
+      if (
+        chatAbiertoActualmente &&
+        (idDelChatDelMensaje === chatAbiertoActualmente ||
+          mensaje.to === chatAbiertoActualmente)
+      ) {
+        setMensajes((prev) => [...prev, mensajeFormateado]);
+      }
     };
 
     socket.on("nuevo_mensaje", handleNewMessage);
@@ -58,7 +89,6 @@ export function ChatPage() {
       socket.off("nuevo_mensaje", handleNewMessage);
     };
   }, []);
-  console.log(mensajes);
 
   return (
     <>

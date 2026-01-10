@@ -3,12 +3,14 @@ import {
   Card,
   CardContent,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 
-import {useEffect, useState} from "react";
-import {useNavigate, Link} from "react-router-dom";
+import {useState} from "react";
+import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useAuth} from "../../context/AuthContext";
 import background from "../../assets/imagenRegistros.png";
@@ -20,7 +22,7 @@ export default function Signup() {
     formState: {errors},
   } = useForm();
   const {signup, isAuthRegistered, registerErrors} = useAuth();
-  const navigate = useNavigate();
+  const [roles, setRoles] = useState("soloVer");
   const [loading, setLoading] = useState(true);
 
   const onClick = (e) => {
@@ -29,15 +31,11 @@ export default function Signup() {
       boton.disabled = true;
     }
   };
-
   const onSubmit = handleSubmit(async (data) => {
+    data.role = roles;
     setLoading(false);
     signup(data);
   });
-
-  useEffect(() => {
-    if (isAuthRegistered) navigate("/");
-  }, [isAuthRegistered, navigate]);
 
   return (
     <Grid
@@ -301,6 +299,47 @@ export default function Signup() {
                 Es necesario confirmar la contraseña
               </Typography>
             )}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}>
+              <Typography
+                variant="h6"
+                component="label"
+                textAlign="center"
+                htmlFor="confirmPassword"
+                sx={{
+                  margin: 0,
+                  fontSize: "1rem",
+                }}>
+                Rol
+              </Typography>
+              <Select
+                labelId="filtro-label"
+                value={roles}
+                onChange={(e) => setRoles(e.target.value)}
+                sx={{
+                  color: "white",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(255, 255, 255, 0.3)",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "white",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#90caf9",
+                  },
+                  "& .MuiSvgIcon-root": {
+                    color: "white",
+                  },
+                }}>
+                <MenuItem value="soloVer">Solo Ver</MenuItem>
+                <MenuItem value="agente">Agente</MenuItem>
+                <MenuItem value="admin">Administrador</MenuItem>
+              </Select>
+            </div>
             <Button
               variant="contained"
               size="medium"

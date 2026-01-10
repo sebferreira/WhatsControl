@@ -4,7 +4,7 @@ import {useAuth} from "../context/AuthContext";
 function HomeAuth() {
   const {user} = useAuth();
   if (user) {
-    return <Navigate to="/tables" replace />;
+    return <Navigate to="/chats" replace />;
   }
   return <Outlet />;
 }
