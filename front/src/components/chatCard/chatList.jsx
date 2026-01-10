@@ -14,23 +14,36 @@ export default function ChatList({chat}) {
     <ListItem
       disablePadding
       sx={{
-        width: "100%",
-        padding: "10px 20px",
+        /*  width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         borderRadius: "8px",
         border: "1px solid #e0e0e0",
         backgroundColor: "#f5f5f5",
-        transition: "background-color 0.3s ease-in-out",
         "&:hover": {
           backgroundColor: "#e0e0e0",
-        },
-        "&:active": {
-          backgroundColor: "#d3d3d3",
-        },
+          },
+          "&:active": {
+            backgroundColor: "#d3d3d3",
+            },
         "&:focus": {
           backgroundColor: "#d3d3d3",
+          }, */ width: "100%",
+        transition: "background-color 0.3s ease-in-out",
+        padding: "10px 20px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        /*  borderRadius: "8px", */
+        borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+        backgroundColor: "#19181d",
+        "&:hover": {
+          backgroundColor: "#1d1e1fff",
+        },
+        "&:active": {
+          backgroundColor: "#383b3dff",
         },
       }}>
       <ListItemButton
@@ -42,14 +55,14 @@ export default function ChatList({chat}) {
           sessionStorage.setItem("actualPath", `/chats/${chat.id_chat}`);
         }}
         sx={{
-          color: "#1e1e1e",
+          color: "#fff",
           textDecoration: "none",
-          "&:hover": {
+          /*  "&:hover": {
             backgroundColor: "#e0e0e0",
           },
           "&:active": {
             backgroundColor: "#d3d3d3",
-          },
+          }, */
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -65,8 +78,10 @@ export default function ChatList({chat}) {
           <ListItemIcon>
             <AccountCircleRoundedIcon
               sx={{
-                color: "#757575",
+                color: "#4c82f9",
+                backgroundColor: "#fff",
                 fontSize: "2.5rem",
+                borderRadius: "100%",
               }}
             />
           </ListItemIcon>

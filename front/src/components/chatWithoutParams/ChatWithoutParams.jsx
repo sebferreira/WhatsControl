@@ -2,15 +2,27 @@ import {Box, Drawer, List, Typography} from "@mui/material";
 
 import ChatList from "../../components/chatCard/chatList";
 import ChatDrawer from "../../components/chatCard/drawer";
+import Navbar from "../navbar/Navbar";
 
-export function ChatWithoutParams({chats}) {
+export function ChatWithoutParams({chats, mensajes}) {
   sessionStorage.setItem("actualPath", "/chats");
+  console.log(chats);
   return (
     <>
       <Box
+        component="nav"
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          flexDirection: {xs: "column", md: "row"},
+          flexShrink: 0,
+        }}>
+        <Navbar />
+      </Box>
+      <Box
         sx={{
           display: {sx: "flex", md: "none"},
-          backgroundColor: "#fff",
+          backgroundColor: "#19181d",
           height: "100vh",
           overflow: "auto",
           flex: "1",
@@ -60,7 +72,7 @@ export function ChatWithoutParams({chats}) {
                 fontWeight: "bold",
                 marginLeft: "3rem",
                 marginBottom: "0.5rem",
-                color: "#1e1e1e",
+                color: "#fff",
               }}>
               Chats Disponibles
             </Typography>
@@ -95,10 +107,14 @@ export function ChatWithoutParams({chats}) {
             sx: {
               backgroundColor: "transparent",
               color: "white",
-              borderRight: 0,
-              width: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
-              marginTop: "3.5rem",
+              /*  borderRight: 0, */
+              /*  width: 560, */
+              marginTop: "5rem",
               overflowY: "auto",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.4);",
+              borderRight: "1px solid rgba(255, 255, 255, 0.1)",
+              width: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
+
               top: 0,
             },
           }}>

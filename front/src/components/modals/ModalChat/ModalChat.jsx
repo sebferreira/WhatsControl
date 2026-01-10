@@ -44,8 +44,11 @@ export default function ModalChat({chat, type, message, setOpenModal}) {
       };
       msjOk = "";
       msj = "Cerrar";
-      usuario = JSON.parse(chat.usuario);
-      console.log(usuario);
+      if (chat.usuario.nombre) {
+        usuario = chat.usuario;
+      } else {
+        usuario = JSON.parse(chat.usuario);
+      }
       break;
     case "users":
       handleOption = async () => {

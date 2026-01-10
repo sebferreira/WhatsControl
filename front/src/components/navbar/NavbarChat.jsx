@@ -13,8 +13,9 @@ export default function NavbarChat({chats}) {
       <AppBar
         position="static"
         sx={{
-          boxShadow: "0",
-          backgroundColor: "rgba(0, 0, 0, 0.55)",
+          boxShadow: " 0px 4px 10px rgba(0, 0, 0, 0.7)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          backgroundColor: "#19181d ",
           width: {
             xs: "100%",
             md: "calc(100% - 400px)",
@@ -23,12 +24,10 @@ export default function NavbarChat({chats}) {
           },
         }}>
         <Toolbar
-          style={{
-            display: "flex",
-            height: "3rem",
-            minHeight: "3.5rem",
-          }}
           sx={{
+            display: "flex",
+            height: {xs: "3.5rem", md: "5rem"},
+            minHeight: {xs: "3.5rem", md: "5rem"},
             justifyContent: "space-between",
             padding: {xs: 0},
             flexDirection: "row",

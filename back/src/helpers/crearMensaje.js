@@ -15,13 +15,13 @@ export async function enviarMensajes(message, datos, chat, io) {
     };
   }
   await Chat.update({ultimoMensaje: message.body}, {where: {id_chat: chatId}});
-  await Mensaje.create({
+  /*  await Mensaje.create({
     id_chat: chatId,
     mensaje: message.body,
     to: message.to,
     fromMe: false,
     etapa: datos[chatId].fase,
-  });
+  }); */
   registrar(message, datos, io);
 
   if (datos[chatId].fase === "finalizado") {

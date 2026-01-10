@@ -1,0 +1,108 @@
+import {useState} from "react";
+import {Box, TextField, Button} from "@mui/material";
+import {useForm} from "react-hook-form";
+import {enviarMSJ} from "../../queryFn/query.js"; // Ajusta la ruta según tu carpeta
+import {useParams} from "react-router-dom";
+
+export function ChatInput() {
+  const [texto, setTexto] = useState("");
+  const {handleSubmit} = useForm();
+  const params = useParams();
+
+  const onSubmit = handleSubmit(async (data) => {
+    if (!texto.trim()) return; // Evitar envíos vacíos
+    const mensajeAEnviar = texto;
+
+    // Limpiamos antes de enviar para sensación de rapidez
+    setTexto("");
+
+    // Enviamos
+    data.mensaje = mensajeAEnviar;
+    await enviarMSJ(data, params.chatId);
+  });
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        marginLeft: "1rem",
+        padding: {sm: "1rem", xs: "0 0 1rem 0"},
+        width: {xs: "90% ", md: "calc(100% - 200px)"},
+      }}>
+      <form
+        onSubmit={onSubmit}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginBottom: "0.5rem",
+          width: "100%",
+          margin: " 0 auto",
+        }}>
+        <TextField
+          fullWidth
+          value={texto}
+          multiline
+          maxRows={4}
+          variant="outlined"
+          placeholder="Escribe tu mensaje..."
+          style={{
+            scrollbarColor: "#484848ff transparent",
+            scrollbarWidth: "thin",
+            scrollbarGutter: "stable",
+            height: "100%",
+            backgroundColor: "#19181d",
+          }}
+          sx={{
+            // ... Tus estilos del TextField ...
+            // (He omitido los estilos largos para ahorrar espacio aquí, cópialos de tu código original)
+            display: "block",
+            paddingLeft: "0.5rem",
+            height: "100%",
+            borderRadius: "20px",
+            border: " 1px solid rgba(255, 255, 255, 0.1)",
+            "& .css-953pxc-MuiInputBase-root-MuiInput-root": {
+              color: "white",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-root": {
+              color: "white",
+              width: "100%",
+              height: "100%",
+            },
+            "& input:-webkit-autofill": {
+              transition: "background-color 600000s 0s, color 600000s 0s",
+            },
+          }}
+          type="text"
+          fontWeight="bold"
+          onChange={(e) => setTexto(e.target.value)}
+          size="small"
+        />
+        {texto && (
+          <Button
+            disabled={!texto}
+            onClick={onSubmit} // Ojo: en form type submit no hace falta onClick, pero lo dejo como lo tenías
+            variant="contained"
+            type="submit"
+            style={{
+              height: "100%",
+              backgroundColor: "#3262e7",
+              borderColor: "#9ecaed",
+              boxShadow: "0 0 10px #2297f7ff",
+              color: "white",
+              cursor: "pointer",
+              borderRadius: "10px",
+            }}>
+            Enviar
+          </Button>
+        )}
+      </form>
+    </Box>
+  );
+}

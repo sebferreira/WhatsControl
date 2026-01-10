@@ -6,6 +6,7 @@ import Signup from "./pages/UserPages/Register";
 import Signin from "./pages/UserPages/Login";
 import {ChatPage} from "./pages/ChatsPage/ChatPage";
 import Navbar from "./components/navbar/Navbar";
+import ClientsPage from "./pages/ClientsPage/ClientsPage";
 
 function App() {
   return (
@@ -54,7 +55,29 @@ function App() {
               </>
             }
           />
-
+          <Route
+            path="/clientes"
+            element={
+              <>
+                <main
+                  style={{
+                    objectFit: "cover",
+                    height: "100vh",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "69%",
+                    backgroundAttachment: "scroll",
+                    overflow: "hidden",
+                    justifyContent: "center",
+                    /*   backgroundColor: "#fff", */
+                    width: "100vw",
+                  }}>
+                  {" "}
+                  <Navbar />
+                  <ClientsPage />
+                </main>
+              </>
+            }
+          />
           <Route
             path="/chats"
             element={
@@ -71,7 +94,6 @@ function App() {
                     width: "100vw",
                   }}>
                   {" "}
-                  <Navbar />
                   <ChatPage />
                 </main>
               </>
@@ -89,7 +111,7 @@ function App() {
                     flexDirection: "column",
                     overflow: "hidden",
                   }}>
-                  <Navbar />
+                  {/*  <Navbar /> */}
                   <div
                     style={{
                       flex: 1,

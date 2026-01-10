@@ -1,11 +1,10 @@
 import {Box, Container, Typography} from "@mui/material";
 import {useEffect, useRef, useState, memo} from "react";
 import {getMensajesByChatId} from "../../queryFn/query";
-import io from "socket.io-client";
 import {useParams} from "react-router-dom";
+import io from "socket.io-client";
 const socket = io("https://whatsapp-auto-p2eg.onrender.com");
-export const MessageSection = memo(function MessageSection() {
-  const [mensajes, setMensajes] = useState([]);
+export const MessageSection = memo(function MessageSection({mensajes}) {
   const [PreviousMessages, setPreviousMessages] = useState([]);
   const params = useParams();
   const getPreviousMessages = async () => {
@@ -17,7 +16,6 @@ export const MessageSection = memo(function MessageSection() {
   };
   useEffect(() => {
     const cargarDatos = async () => {
-      setMensajes([]);
       setPreviousMessages([]);
 
       getPreviousMessages();
@@ -25,53 +23,10 @@ export const MessageSection = memo(function MessageSection() {
     cargarDatos();
   }, [params.chatId]);
 
-  useEffect(() => {
-    const handleNewMessage = (mensaje) => {
-      console.log("Llegó mensaje nuevo:", mensaje);
-      let fechaFinal;
-      const fechaEntrante =
-        mensaje.createdAt || mensaje.timestamp || Date.now();
-
-      if (!isNaN(fechaEntrante)) {
-        const timestamp = Number(fechaEntrante);
-        fechaFinal = new Date(
-          timestamp < 100000000000 ? timestamp * 1000 : timestamp
-        );
-      } else {
-        fechaFinal = new Date(fechaEntrante);
-      }
-
-      if (isNaN(fechaFinal.getTime())) {
-        fechaFinal = new Date();
-      }
-      // -------------------------
-      const mensajeFormateado = {
-        id: Date.now() + Math.random(),
-        id_chat: mensaje.id_chat,
-        mensaje: mensaje.body || mensaje.mensaje,
-        to: mensaje.to,
-        fromMe: mensaje.fromMe,
-        createdAt: fechaFinal.toISOString(),
-      };
-
-      setMensajes((prev) => [...prev, mensajeFormateado]);
-    };
-
-    socket.on("nuevo_mensaje", handleNewMessage);
-    return () => {
-      socket.off("nuevo_mensaje", handleNewMessage);
-    };
-  }, []);
   const messagesEndRef = useRef(null);
-  /*  const filtrarPorId = mensajes.filter((mensaje) => {
-    return mensaje.id_chat === params.chatId || mensaje.to === params.chatId;
-    });
-    const mensajesOrdenadosPorHorario = filtrarPorId.sort((a, b) => {
-      return new Date(a.createdAt) - new Date(b.createdAt);
-      });
-      const mensajesConcatenados = PreviousMessages.concat(mensajesOrdenadosPorHorario); */
+
   console.log(mensajes);
-  const MensajesfiltradosPorId = mensajes.filter((mensaje) => {
+  /* const MensajesfiltradosPorId = mensajes.filter((mensaje) => {
     return mensaje.id_chat === params.chatId || mensaje.to === params.chatId;
   });
   const mensajesConcatenados = [
@@ -86,6 +41,58 @@ export const MessageSection = memo(function MessageSection() {
   useEffect(() => {
     scrollToBottom();
   }, [mensajesConcatenados]);
+  console.log(mensajesConcatenados); */
+  const MensajesfiltradosPorId = mensajes.filter((mensaje) => {
+    return mensaje.id_chat === params.chatId || mensaje.to === params.chatId;
+  });
+  const socketLimpio = MensajesfiltradosPorId.filter((msgSocket) => {
+    // Buscamos si existe un gemelo en el historial
+    const existeEnHistorial = PreviousMessages.some((msgHistorial) => {
+      // 1. Comparar Texto (ignorando espacios extra)
+      const textoHistorial = (msgHistorial.mensaje || "").trim();
+      const textoSocket = (msgSocket.mensaje || msgSocket.body || "").trim();
+      const mismoTexto = textoHistorial === textoSocket;
+
+      // 2. Comparar Fechas con margen de error (2 segundos)
+      const tiempoHistorial = new Date(msgHistorial.createdAt).getTime();
+      const tiempoSocket = new Date(msgSocket.createdAt).getTime();
+      const diferencia = Math.abs(tiempoHistorial - tiempoSocket);
+
+      // Si hay menos de 2000ms (2 segundos) de diferencia, asumimos que es el mismo momento
+      const mismaFechaAprox = diferencia < 2000;
+
+      // 3. Comparación por ID (si ambos tienen ID real de base de datos)
+      // Esto ayuda si tu backend ya devuelve el ID real en el socket
+      const mismoId =
+        msgSocket.id && msgHistorial.id && msgSocket.id === msgHistorial.id;
+
+      // Es duplicado si: (Mismo ID) O (Mismo Texto Y Misma Fecha Aprox)
+      return mismoId || (mismoTexto && mismaFechaAprox);
+    });
+
+    // Si existe en el historial, NO lo queremos en la lista del socket
+    return !existeEnHistorial;
+  });
+
+  // 3. Unimos y Ordenamos
+  const mensajesConcatenados = [...PreviousMessages, ...socketLimpio].sort(
+    (a, b) => {
+      const fechaA = new Date(a.createdAt || Date.now());
+      const fechaB = new Date(b.createdAt || Date.now());
+      return fechaA - fechaB;
+    }
+  );
+
+  // --------------------------------
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [mensajesConcatenados.length]);
+  console.log(mensajesConcatenados);
   return (
     <Box
       sx={{
@@ -121,7 +128,7 @@ export const MessageSection = memo(function MessageSection() {
                 variant="body1"
                 sx={{
                   color: "white",
-                  backgroundColor: "#3B82F6",
+                  backgroundColor: "#3262e7",
                   borderRadius: "10px",
                   padding: "10px",
                   maxWidth: "60%",

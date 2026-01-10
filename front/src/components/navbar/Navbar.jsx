@@ -1,22 +1,30 @@
 import {AppBar, IconButton, Toolbar, Typography, Box} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 export default function Navbar() {
+  const location = useLocation();
+  let ancho;
+  if (location.pathname != "/clientes") {
+    ancho = {xs: "100%", md: "400px", lg: "500px", xl: "560px"};
+  } else {
+    ancho = "100%";
+  }
+
   return (
     <>
       <AppBar
         position="static"
         sx={{
           boxShadow: "0",
-          backgroundColor: "#3B82F6",
+          background: "linear-gradient(135deg, #1E3A8A, #2563EB)",
+          width: ancho,
         }}>
         <Toolbar
-          style={{
+          sx={{
             display: "flex",
             justifyContent: "space-between",
-            height: "3rem",
-            minHeight: "3.5rem",
+            height: {xs: "3.5rem", md: "5rem"},
+            minHeight: {xs: "3.5rem", md: "5rem"},
           }}>
           <Box
             style={{

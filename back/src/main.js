@@ -102,7 +102,16 @@ app.post("/webhook", async (req, res) => {
             estado: "abierto",
           },
         });
+        const mensajeGuardado = await Mensaje.create({
+          id_chat: msgAdaptado.from,
+          mensaje: msgAdaptado.body,
+          to: msgAdaptado.to,
+          fromMe: false,
+          etapa: datos[msgAdaptado.from]?.fase || "inicio",
+        });
         io.emit("nuevo_mensaje", {
+          id: mensajeGuardado.id || mensajeGuardado.id_mensaje,
+
           id_chat: msgAdaptado.from,
           from: msgAdaptado.from,
           mensaje: msgAdaptado.body,

@@ -21,6 +21,7 @@ export default async function responderYGuardar(
   });
   if (io) {
     io.emit("nuevo_mensaje", {
+      id_mensaje: nuevoMensaje.id_mensaje,
       id_chat: nuevoMensaje.id_chat,
       mensaje: nuevoMensaje.mensaje,
       body: nuevoMensaje.mensaje,
