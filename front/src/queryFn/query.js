@@ -22,6 +22,7 @@ function signUp(body) {
     url: `${URL}/users/register`,
     method: "POST",
     body,
+    withToken: true,
   });
 }
 function userLogout() {
