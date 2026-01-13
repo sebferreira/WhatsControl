@@ -19,7 +19,7 @@ const Cliente = sequelize.define(
       allowNull: false,
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
