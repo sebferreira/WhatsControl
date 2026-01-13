@@ -20,7 +20,7 @@ export default function ChatDrawer({chats, mensajes}) {
       <Box
         sx={{
           width: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
-          height: "100vh",
+          height: "85vh",
           backgroundColor: "#19181d ",
           display: "flex",
           flexDirection: "column",

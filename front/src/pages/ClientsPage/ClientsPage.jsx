@@ -19,7 +19,7 @@ import {
 import {getClientes} from "../../queryFn/query";
 
 const columns = [
-  {field: "id_chat", headerName: "Teléfono (ID Chat)", width: 150},
+  {field: "id_chat", headerName: "Teléfono", width: 150},
   {field: "nombre", headerName: "Nombre", width: 130},
   {field: "apellido", headerName: "Apellido", width: 130},
   {
@@ -70,6 +70,7 @@ export default function ClientsPage() {
     const getClients = async () => {
       try {
         const result = await getClientes();
+        console.log(result);
         if (result) setData(result);
       } catch (error) {
         console.error("Error cargando clientes", error);
@@ -84,6 +85,7 @@ export default function ClientsPage() {
     if (filtro === "Todos") return true;
     return row.categoria?.toLowerCase() === filtro.toLowerCase();
   });
+  console.log(filasFiltradas);
 
   return (
     <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
@@ -149,7 +151,7 @@ export default function ClientsPage() {
         <DataGrid
           rows={filasFiltradas}
           columns={columns}
-          getRowId={(row) => row.id_chat}
+          getRowId={(row) => row.id_cliente}
           loading={loading}
           initialState={{
             pagination: {paginationModel: {pageSize: 10}},

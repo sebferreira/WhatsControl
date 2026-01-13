@@ -24,18 +24,25 @@ export default function Signup() {
   const {signup, isAuthRegistered, registerErrors} = useAuth();
   const [roles, setRoles] = useState("soloVer");
   const [loading, setLoading] = useState(true);
-
   const onClick = (e) => {
     if (isAuthRegistered && registerErrors.length <= 0 && !loading) {
       let boton = e.target;
       boton.disabled = true;
     }
   };
+  const recargar = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
   const onSubmit = handleSubmit(async (data) => {
     data.role = roles;
     setLoading(false);
     signup(data);
   });
+  if (isAuthRegistered) {
+    recargar();
+  }
 
   return (
     <Grid
@@ -44,10 +51,13 @@ export default function Signup() {
       alignItems="center"
       direction="column"
       spacing={2}
-      sx={{minHeight: "100vh", height: "100vh"}}>
+      sx={{
+        /* minHeight: "100vh", height: "100vh" */
+        marginTop: {md: "2rem"},
+      }}>
       <Card
         sx={{
-          width: {xs: "100vw", md: "60rem", lg: "70rem"},
+          width: {xs: "100vw", md: "60rem", lg: "60rem"},
           height: {xs: "100vh", md: "70vh"},
           mx: "auto",
           minHeight: "500px",
@@ -88,8 +98,22 @@ export default function Signup() {
               marginBottom: {xs: 2, md: 3},
               fontSize: "1.1rem",
             }}>
-            Registrarse
+            Registrar
           </Typography>
+          {isAuthRegistered && (
+            <Typography
+              variant="h5"
+              component="h2"
+              textAlign="center"
+              fontWeight="bold"
+              color="success"
+              sx={{
+                marginBottom: {xs: 2, md: 3},
+                fontSize: "0.9rem",
+              }}>
+              Usuario registrado con exito
+            </Typography>
+          )}
           <form onSubmit={onSubmit}>
             {registerErrors.map((error, i) => {
               return (
@@ -355,33 +379,9 @@ export default function Signup() {
               }}
               onClick={onClick}
               type="submit">
-              Registrarse
+              Registrar Usuario
             </Button>
           </form>
-          <Typography
-            variant="body2"
-            component="p"
-            textAlign="center"
-            fontWeight="bold"
-            sx={{
-              color: "black",
-              width: "fit-content",
-              margin: "1rem auto 0",
-            }}>
-            <Link to="/" style={{textDecoration: "none", width: "fit-content"}}>
-              <Typography
-                sx={{
-                  color: "#fff",
-                  "&:hover": {
-                    color: "#d0d0d0ff",
-                  },
-                  fontWeight: "bold",
-                }}>
-                ¿Ya tienes una cuenta? <br />
-                Iniciar Sesion.
-              </Typography>
-            </Link>
-          </Typography>
         </CardContent>
       </Card>
     </Grid>

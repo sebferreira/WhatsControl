@@ -22,12 +22,23 @@ export const AuthProvider = ({children}) => {
 
   const signup = async (value) => {
     const data = await signUp(value);
+    console.log(data);
     if (data.length > 0) {
       return setRegisterErrors(data);
     }
-    /*   setIsAuthRegistered(true); */
+    setLoading(false);
     setRegisterErrors([]);
+    setIsAuthRegistered(true);
   };
+  useEffect(() => {
+    if (registerErrors.length > 0) {
+      const timer1 = setTimeout(() => {
+        setRegisterErrors([]);
+        setLoading(true);
+      }, 5000);
+      return () => clearTimeout(timer1);
+    }
+  }, [registerErrors]);
 
   const signin = async (value) => {
     if (Cookies.get("userRegistered")) {
@@ -87,7 +98,7 @@ export const AuthProvider = ({children}) => {
     }
     checkLogin();
   }, []);
-  console.log(user);
+  console.log(user, loading);
   return (
     <AuthContext.Provider
       value={{

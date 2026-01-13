@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 import {CircularProgress} from "@mui/material";
 
 function ProtectedRoute() {
-  const {isAuthenticated, loading} = useAuth();
+  const {isAuthenticated, loading, user} = useAuth();
   if (loading) {
     return (
       <Box
@@ -13,13 +13,17 @@ function ProtectedRoute() {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          width: "100vw",
         }}>
-        <CircularProgress />
+        <CircularProgress sx={{color: "white"}} />
       </Box>
     );
   }
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
   if (!loading && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return <Outlet />;
 }

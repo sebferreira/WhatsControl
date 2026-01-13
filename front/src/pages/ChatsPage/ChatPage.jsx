@@ -5,6 +5,41 @@ import {ChatWithParams} from "../../components/chatWithParams/ChatWithParams";
 import {ChatWithoutParams} from "../../components/chatWithoutParams/ChatWithoutParams";
 const socket = io("https://whatsapp-auto-p2eg.onrender.com");
 import io from "socket.io-client";
+/* const chatsPrueba = [
+  {
+    id_chat: "chat-prueba-1", // Debe ser 'id_chat' para que coincida con tu lógica
+    usuario: {nombre: "Usuario Prueba 1", apellido: ""},
+    ultimoMensaje: "Este es un mensaje mockeado",
+    updatedAt: new Date().toISOString(),
+    mensajes: [],
+    estado: "abierto",
+  },
+  {
+    id_chat: "chat-prueba-2",
+    usuario: {nombre: "Usuario Prueba 2", apellido: ""},
+    ultimoMensaje: "Otro test visual",
+    updatedAt: new Date().toISOString(),
+    mensajes: [],
+    estado: "abierto",
+  },
+  {
+    id_chat: "chat-prueba-3",
+    usuario: {nombre: "Usuario Prueba 3", apellido: ""},
+    ultimoMensaje: "Otro test visual",
+    updatedAt: new Date().toISOString(),
+    mensajes: [],
+    estado: "abierto",
+  },
+  {
+    id_chat: "chat-prueba-4",
+    usuario: {nombre: "Usuario Prueba 4", apellido: ""},
+    ultimoMensaje: "Otro test visual",
+    updatedAt: new Date().toISOString(),
+    mensajes: [],
+    estado: "abierto",
+  },
+]; */
+
 export function ChatPage() {
   const [chats, setChats] = useState([]);
   const [mensajes, setMensajes] = useState([]);
@@ -26,8 +61,27 @@ export function ChatPage() {
   useEffect(() => {
     getAllChats();
   }, []);
+
   useEffect(() => {
+    const handleChatUpdated = (data) => {
+      console.log("Actualizando info del cliente:", data);
+
+      setChats((prevChats) => {
+        return prevChats.map((chat) => {
+          if (String(chat.id_chat) === String(data.id_chat)) {
+            return {
+              ...chat,
+              usuario: {...chat.usuario, ...data.usuario},
+              estado: data.estado || chat.estado,
+            };
+          }
+          return chat;
+        });
+      });
+    };
+
     const handleNewMessage = (mensaje) => {
+      console.log("Nuevo mensaje recibido:", mensaje);
       let fechaFinal;
       const fechaEntrante =
         mensaje.createdAt || mensaje.timestamp || Date.now();
@@ -55,40 +109,53 @@ export function ChatPage() {
 
       const idDelChatDelMensaje = mensajeFormateado.id_chat;
       setChats((prevChats) => {
-        const chatExistente = prevChats.find(
-          (c) => c.id_chat === idDelChatDelMensaje
-        );
-        const restoChats = prevChats.filter(
-          (c) => c.id_chat !== idDelChatDelMensaje
+        const targetId = String(idDelChatDelMensaje);
+        const chatPrevio = prevChats.find(
+          (c) => String(c.id_chat) === targetId
         );
 
-        if (chatExistente) {
-          const chatActualizado = {
-            ...chatExistente,
-            ultimoMensaje: mensajeFormateado.mensaje,
-            updatedAt: new Date().toISOString(),
-          };
-          return [chatActualizado, ...restoChats];
-        } else {
-          return prevChats;
-        }
+        const otrosChats = prevChats.filter(
+          (c) => String(c.id_chat) !== targetId
+        );
+
+        const chatActualizado = {
+          estado: "abierto",
+          mensajes: [],
+          ...(chatPrevio || {}),
+
+          id_chat: targetId,
+          ultimoMensaje: mensajeFormateado.mensaje,
+          updatedAt: mensajeFormateado.createdAt,
+
+          usuario: chatPrevio?.usuario || {
+            nombre: mensaje.pushName || "Nuevo Cliente",
+            apellido: "",
+          },
+        };
+
+        return [chatActualizado, ...otrosChats];
       });
+
       const chatAbiertoActualmente = chatIdRef.current;
 
       if (
         chatAbiertoActualmente &&
-        (idDelChatDelMensaje === chatAbiertoActualmente ||
-          mensaje.to === chatAbiertoActualmente)
+        (String(idDelChatDelMensaje) === String(chatAbiertoActualmente) ||
+          String(mensaje.to) === String(chatAbiertoActualmente))
       ) {
         setMensajes((prev) => [...prev, mensajeFormateado]);
       }
     };
 
     socket.on("nuevo_mensaje", handleNewMessage);
+    socket.on("chat_updated", handleChatUpdated);
+
     return () => {
       socket.off("nuevo_mensaje", handleNewMessage);
+      socket.off("chat_updated", handleChatUpdated);
     };
   }, []);
+  console.log(chats);
 
   return (
     <>

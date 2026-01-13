@@ -103,6 +103,12 @@ export async function enviarMensajes(message, datos, chat, io) {
         datos[chatId].fase,
         io
       );
+      io.emit("chat_updated", {
+        id_chat: chatId,
+        usuario: datos[chatId].info,
+        estado: "cliente_registrado",
+      });
+
       datos[chatId].fase = "confirmado";
     }
   }

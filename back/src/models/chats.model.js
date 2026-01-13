@@ -27,7 +27,7 @@ const Chat = sequelize.define(
       defaultValue: "Pendiente",
     },
     ultimoMensaje: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
   },
   {

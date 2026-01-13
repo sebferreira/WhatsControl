@@ -19,11 +19,13 @@ export function ChatWithoutParams({chats, mensajes}) {
         }}>
         <Navbar />
       </Box>
+
       <Box
         sx={{
           display: {sx: "flex", md: "none"},
           backgroundColor: "#19181d",
           height: "100vh",
+
           overflow: "auto",
           flex: "1",
         }}>
@@ -32,7 +34,8 @@ export function ChatWithoutParams({chats, mensajes}) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: "100%",
+            width: "100%" /* 
+            height: "85vh", */,
           }}>
           {chats.mensaje && (
             <Box
@@ -61,30 +64,35 @@ export function ChatWithoutParams({chats, mensajes}) {
             </Box>
           )}
         </Box>
+        <Box
+          sx={{
+            maxHeight: "85vh",
+            overflow: "auto",
+          }}>
+          {!chats.mensaje && (
+            <>
+              <Typography
+                component="p"
+                variant="h6"
+                sx={{
+                  marginTop: "1rem",
+                  fontWeight: "bold",
+                  marginLeft: "3rem",
+                  marginBottom: "0.5rem",
+                  color: "#fff",
+                }}>
+                Chats Disponibles
+              </Typography>
 
-        {!chats.mensaje && (
-          <>
-            <Typography
-              component="p"
-              variant="h6"
-              sx={{
-                marginTop: "1rem",
-                fontWeight: "bold",
-                marginLeft: "3rem",
-                marginBottom: "0.5rem",
-                color: "#fff",
-              }}>
-              Chats Disponibles
-            </Typography>
-
-            <List>
-              {chats &&
-                chats.map((chat) => (
-                  <ChatList chat={chat} key={chat.id_chat} />
-                ))}
-            </List>
-          </>
-        )}
+              <List>
+                {chats &&
+                  chats.map((chat) => (
+                    <ChatList chat={chat} key={chat.id_chat} />
+                  ))}
+              </List>
+            </>
+          )}
+        </Box>
       </Box>
       <Box
         sx={{
@@ -105,7 +113,7 @@ export function ChatWithoutParams({chats, mensajes}) {
           }}
           PaperProps={{
             sx: {
-              backgroundColor: "transparent",
+              backgroundColor: "#19181d ",
               color: "white",
               marginTop: "5rem",
               overflowY: "auto",

@@ -39,7 +39,7 @@ export default function Signin() {
       sx={{minHeight: "100vh", height: "100vh"}}>
       <Card
         sx={{
-          width: {xs: "100vw", md: "60rem", lg: "90rem"},
+          width: {xs: "100vw", md: "60rem", lg: "80rem"},
           height: {xs: "100vh", md: "70vh"},
           mx: "auto",
           minHeight: "500px",
@@ -214,30 +214,6 @@ export default function Signin() {
               Iniciar Sesión
             </Button>
           </form>
-          <Typography
-            variant="body2"
-            component="p"
-            textAlign="center"
-            fontWeight="bold"
-            sx={{
-              marginTop: "1rem",
-              color: "black",
-            }}>
-            <Link to="/register" style={{textDecoration: "none"}}>
-              <Typography
-                sx={{
-                  color: "#fff",
-                  "&:hover": {
-                    color: "#d0d0d0ff",
-                  },
-                  fontSize: "0.9rem",
-                  fontWeight: "bold",
-                }}>
-                ¿No tienes una cuenta?
-                <br /> Registrate.
-              </Typography>
-            </Link>
-          </Typography>
         </CardContent>
       </Card>
     </Grid>

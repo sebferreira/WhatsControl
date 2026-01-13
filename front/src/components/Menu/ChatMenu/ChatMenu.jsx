@@ -16,9 +16,11 @@ import {useParams} from "react-router-dom";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import ModalChat from "../../modals/ModalChat/ModalChat";
 import {memo} from "react";
+import {useAuth} from "../../../context/AuthContext";
 
 function ChatMenu({chat}) {
   const params = useParams();
+  const {user} = useAuth();
   const [openModalAsignar, setOpenModalAsignar] = useState(false);
   const [openModalEstado, setOpenModalEstado] = useState(false);
   const [openModalInfo, setOpenModalInfo] = useState(false);
@@ -40,9 +42,16 @@ function ChatMenu({chat}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(chat);
+  let mostrar;
+  if (user) {
+    if (user.role !== "soloVer") {
+      mostrar = "flex";
+    } else {
+      mostrar = "none";
+    }
+  }
   return (
-    <>
+    <Box sx={{display: mostrar}}>
       <Box
         sx={{
           display: "flex",
@@ -50,7 +59,7 @@ function ChatMenu({chat}) {
           textAlign: "center",
           marginRight: "1rem",
         }}>
-        <Tooltip title="Menú Tarea">
+        <Tooltip title="Información">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -150,7 +159,7 @@ function ChatMenu({chat}) {
           />
         </Modal>
       )}
-    </>
+    </Box>
   );
 }
 

@@ -6,8 +6,18 @@ import {MessageSection} from "../MessageSection/MessageSection";
 import {memo} from "react";
 import Navbar from "../navbar/Navbar.jsx";
 import {ChatInput} from "../chatInput/ChatInput.jsx";
+import {useAuth} from "../../context/AuthContext.jsx";
 
 export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
+  const {user} = useAuth();
+  let mostrar;
+  if (user) {
+    if (user.role !== "soloVer") {
+      mostrar = "flex";
+    } else {
+      mostrar = "none";
+    }
+  }
   return (
     <Box
       sx={{
@@ -46,14 +56,14 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           }}
           PaperProps={{
             sx: {
-              backgroundColor: "transparent",
+              /*  backgroundColor: "transparent", */
               color: "white",
               marginTop: "5rem",
               overflowY: "auto",
               boxShadow: "0 10px 30px rgba(0,0,0,0.4);",
               borderRight: "1px solid rgba(255, 255, 255, 0.1)",
               width: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
-
+              backgroundColor: "#19181d ",
               top: 0,
             },
           }}>
@@ -67,7 +77,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           maxWidth: "100vw",
           paddingTop: "0.5rem",
           marginLeft: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
-          display: {sm: "flex ", md: "flex"},
+          display: mostrar,
           minWidth: {sm: "30rem"},
           justifyContent: "center",
           borderTop: "1px solid rgba(255, 255, 255, 0.1)",

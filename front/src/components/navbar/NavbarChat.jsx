@@ -5,6 +5,7 @@ import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRound
 import ChatMenu from "../Menu/ChatMenu/ChatMenu";
 export default function NavbarChat({chats}) {
   const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
   const params = useParams();
   const chat = chats.find((chat) => chat.id_chat === params.chatId);

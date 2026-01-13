@@ -4,12 +4,14 @@ import {
   ListItemButton,
   ListItemIcon,
   Box,
+  Typography,
 } from "@mui/material";
 import {Link} from "react-router-dom";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export default function ChatList({chat}) {
+  console.log(chat);
   return (
     <ListItem
       disablePadding
@@ -20,7 +22,6 @@ export default function ChatList({chat}) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        /*  borderRadius: "8px", */
         borderTop: "1px solid rgba(255, 255, 255, 0.1)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
         backgroundColor: "#19181d",
@@ -35,19 +36,13 @@ export default function ChatList({chat}) {
         component={Link}
         to={`/chats/${chat.id_chat}`}
         onClick={() => {
-          console.log(chat);
           sessionStorage.setItem("previousPath", "/chats");
           sessionStorage.setItem("actualPath", `/chats/${chat.id_chat}`);
         }}
         sx={{
           color: "#fff",
           textDecoration: "none",
-          /*  "&:hover": {
-            backgroundColor: "#e0e0e0",
-          },
-          "&:active": {
-            backgroundColor: "#d3d3d3",
-          }, */
+
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -70,26 +65,37 @@ export default function ChatList({chat}) {
               }}
             />
           </ListItemIcon>
-          <Box>
-            <ListItemText
-              primary={chat.id_chat /* .slice(3, -5) */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}>
+            <div style={{display: "flex"}}>
+              <ListItemText
+                primary={chat.id_chat}
+                sx={{
+                  color: "white",
+                }}
+              />
+              <ListItemText
+                primary={chat.usuario_asignado || "No asignado"}
+                style={{
+                  fontSize: "0.8rem",
+                  color: "#8b8b8bff",
+                  marginLeft: "5px",
+                }}
+              />
+            </div>
+            <Typography
+              noWrap
+              variant="body2"
               sx={{
-                "& .MuiTypography-root": {
-                  width: " 10rem",
-                  overflow: "hidden",
-                  textOverflow: {xs: "ellipsis", sm: "initial"},
-                  whiteSpace: "nowrap",
-                },
-              }}
-            />
-            <ListItemText
-              primary={chat.usuario_asignado}
-              style={{
-                fontSize: "0.8rem",
-                color: "#757575",
-                marginLeft: "5px",
-              }}
-            />
+                textOverflow: "ellipsis",
+                maxWidth: "10rem",
+                color: "#8b8b8bff",
+              }}>
+              {chat.ultimoMensaje}
+            </Typography>
           </Box>
         </div>
         <ArrowForwardIosIcon

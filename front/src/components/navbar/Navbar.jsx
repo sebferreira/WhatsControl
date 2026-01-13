@@ -1,16 +1,32 @@
-import {AppBar, IconButton, Toolbar, Typography, Box} from "@mui/material";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Box,
+  Drawer,
+} from "@mui/material";
 import {Link, useLocation} from "react-router-dom";
 import {useAuth} from "../../context/AuthContext";
-
+import {useState} from "react";
+import NavDrawer from "./Drawers/NavDrawers";
+import MenuIcon from "@mui/icons-material/Menu";
+import ProfileMenu from "../Profile/ProfileMenu";
+import AdminMenu from "../Menu/AdminMenu/AdminMenu";
 export default function Navbar() {
   const {user} = useAuth();
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   let ancho = {xs: "100%", md: "400px", lg: "500px", xl: "560px"};
   let mostrar = "none";
+  let mostrarIcono = "none";
   if (user) {
     if (user.role === "admin") {
-      if (location.pathname != "/clientes") {
-        ancho = {xs: "100%", md: "400px", lg: "500px", xl: "560px"};
+      mostrarIcono = {xs: "flex", md: "none"};
+      if (
+        location.pathname != "/clientes" &&
+        location.pathname != "/register"
+      ) {
         mostrar = "flex";
       } else {
         ancho = "100%";
@@ -18,7 +34,6 @@ export default function Navbar() {
       }
     } else {
       mostrar = "none";
-      ancho = {xs: "100%", md: "400px", lg: "500px", xl: "560px"};
     }
   }
 
@@ -39,35 +54,28 @@ export default function Navbar() {
             minHeight: {xs: "3.5rem", md: "5rem"},
           }}>
           <Box
-            style={{
+            sx={{
               display: "flex",
-              gap: "5px",
               width: "100%",
               height: "100%",
               justifyContent: "space-between",
             }}>
-            <Typography
-              variant="h6"
+            <IconButton
+              color="inherit"
+              size="large"
+              onClick={() => setOpen(true)}
               sx={{
-                fontSize: {xs: "1.25rem", xl: "1.5rem", alignContent: "center"},
+                display: mostrarIcono,
               }}>
-              <Link
-                to="/chats"
-                style={{
-                  textDecoration: "none",
-                  color: "#FFFF",
-                  fontWeight: "bold",
-                }}>
-                ChatBot
-              </Link>
-            </Typography>
-            <Link
-              to="/clientes"
+              <MenuIcon />
+            </IconButton>
+            <Box
               style={{
-                textDecoration: "none",
-                display: mostrar,
-                color: "#2359d4",
-                fontWeight: "bold",
+                display: "flex",
+                gap: "5px",
+                width: "100%",
+                height: "100%",
+                justifyContent: "space-between",
               }}>
               <Typography
                 variant="h6"
@@ -75,17 +83,36 @@ export default function Navbar() {
                   fontSize: {
                     xs: "1.25rem",
                     xl: "1.5rem",
-                    height: "100%",
                     alignContent: "center",
-                    backgroundColor: "#fff",
-                    fontWeight: "bold",
-                    paddingInline: "1rem",
                   },
                 }}>
-                Clientes
+                <Link
+                  to="/chats"
+                  style={{
+                    textDecoration: "none",
+                    color: "#FFFF",
+                    fontWeight: "bold",
+                  }}>
+                  ChatBot
+                </Link>
               </Typography>
-            </Link>
+              <Box sx={{display: "flex"}}>
+                <Box sx={{display: {xs: "none", md: "flex"}}}>
+                  <AdminMenu />
+                </Box>
+                <ProfileMenu />
+              </Box>
+            </Box>
           </Box>
+          <Drawer
+            open={open}
+            anchor="left"
+            onClose={() => setOpen(false)}
+            sx={{
+              display: {xs: "flex", md: "none"},
+            }}>
+            <NavDrawer />
+          </Drawer>
         </Toolbar>
       </AppBar>
     </>
