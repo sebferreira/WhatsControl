@@ -126,23 +126,17 @@ function App() {
                       }}> */}
                   <main
                     style={{
-                      // 1. DIMENSIONES MAESTRAS
-                      height: "100dvh", // Dynamic Viewport Height (Mejor que svh para apps completas)
-                      width: "100%", // % evita el scroll horizontal
-
-                      // 2. LAYOUT FLEX
+                      height: "100dvh",
+                      width: "100%",
                       display: "flex",
                       flexDirection: "column",
-
-                      // 3. LIMPIEZA
-                      overflow: "hidden", // Nada sale de aquí
+                      overflow: "hidden",
                       margin: 0,
                       padding: 0,
-                      position: "fixed", // Truco: Fija el main a la pantalla para evitar rebotes en móvil
+                      position: "fixed",
                       top: 0,
                       left: 0,
                     }}>
-                    {/* El div intermedio también debe llenar, no definir altura propia */}
                     <div
                       style={{
                         flex: 1,

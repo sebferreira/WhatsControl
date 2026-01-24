@@ -22,23 +22,29 @@ export function ChatInput() {
   return (
     <Box
       sx={{
-        display: "flex",
+        /*  display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         marginLeft: "1rem",
         padding: {sm: "1rem", xs: "0 0 1rem 0"},
-        width: "90% ",
+        width: "90% ", */
+        width: "100%",
       }}>
       <form
         onSubmit={onSubmit}
         style={{
-          display: "flex",
+          /*  display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           gap: "0.5rem",
           marginBottom: "0.5rem",
           width: "100%",
-          margin: " 0 auto",
+          margin: " 0 auto", */
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end", // Alinea el botón abajo si el texto crece mucho
+          gap: "10px", // Espacio consistente entre input y botón
+          width: "100%",
         }}>
         <TextField
           fullWidth

@@ -8,7 +8,11 @@ export function ChatWithoutParams({chats, mensajes}) {
   sessionStorage.setItem("actualPath", "/chats");
 
   return (
-    <>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+      }}>
       <Box
         component="nav"
         sx={{
@@ -136,6 +140,6 @@ export function ChatWithoutParams({chats, mensajes}) {
           <Typography>Elija un chat para empezar a trabajar</Typography>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
