@@ -86,18 +86,12 @@ function App() {
                 <>
                   <main
                     style={{
-                      objectFit: "cover",
                       height: "100svh",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "69%",
-                      backgroundAttachment: "scroll",
+                      width: "100vw",
                       display: "flex",
                       flexDirection: "column",
                       overflow: "hidden",
-                      margin: 0,
-                      padding: 0,
-                      justifyContent: "flex-start",
-                      width: "100vw",
+                      objectFit: "cover",
                     }}>
                     {" "}
                     <ChatPage />
@@ -111,11 +105,17 @@ function App() {
                 <>
                   <main
                     style={{
-                      height: "100vh",
-                      width: "100vw",
+                      height: "100svh",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "69%",
+                      backgroundAttachment: "scroll",
                       display: "flex",
                       flexDirection: "column",
                       overflow: "hidden",
+                      margin: 0,
+                      padding: 0,
+                      justifyContent: "flex-start",
+                      width: "100vw",
                     }}>
                     {/*  <Navbar /> */}
                     <div
