@@ -49,9 +49,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         }} */ component="main"
         sx={{
           flexGrow: 1,
-          // En móvil no hay margen izquierdo porque el drawer no está
           marginLeft: {xs: 0, md: 0},
-          width: {xs: "100%", md: `calc(100% - 400px)`}, // Ajusta según el ancho de tu drawer
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
@@ -62,40 +60,20 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           anchor="left"
           open={true}
           sx={{
-            // EN MÓVIL: OCULTO (Porque ya estamos viendo un chat específico)
-            // EN ESCRITORIO: VISIBLE (Como barra lateral)
             display: {xs: "none", md: "block"},
-
-            // Aseguramos que el Drawer no tenga zIndex que tape el navbar
             zIndex: 0,
-
-            // Ancho del drawer container
             width: {md: "400px", lg: "500px", xl: "560px"},
             flexShrink: 0,
-            overflow: "hidden",
             "& .MuiDrawer-paper": {
-              // Estilos del papel interno
+              overflow: "hidden",
               width: {md: "400px", lg: "500px", xl: "560px"},
               boxSizing: "border-box",
               backgroundColor: "#19181d",
-              marginTop: "5rem", // Ajusta según tu Navbar real
-              height: "calc(100% - 5rem)", // Resta el navbar para que no se pase
-              borderRight: "1px solid rgba(255, 255, 255, 0.1)",
-            },
-          }}
-          /*   PaperProps={{
-            sx: {
-              color: "white",
               marginTop: "5rem",
-              overflowY: "auto",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.4);",
+              height: "calc(100% - 5rem)",
               borderRight: "1px solid rgba(255, 255, 255, 0.1)",
-              width: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
-              backgroundColor: "#19181d ",
-              top: 0,
             },
-          }} */
-        >
+          }}>
           <ChatDrawer chats={chats} mensajes={mensajes} />
         </Drawer>
         <MessageSection mensajes={mensajes} />
@@ -118,7 +96,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         }}>
         <ChatInput />
       </Box> */}
-      {/*  <Box
+      <Box
         sx={{
           width: {xs: "100%", md: "auto"},
           marginLeft: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
@@ -131,19 +109,6 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           padding: "10px",
           paddingLeft: {xs: "10px", md: "0"},
           paddingBottom: "max(10px, env(safe-area-inset-bottom))",
-          justifyContent: "center",
-        }}>
-        <Box sx={{width: "100%", maxWidth: "1000px"}}> */}
-      <Box
-        sx={{
-          // ... otros estilos ...
-          zIndex: 10,
-          padding: "10px",
-          paddingLeft: {xs: "10px", md: "0"},
-
-          // CAMBIO: Aumenta el mínimo de 10px a 16px o 20px
-          paddingBottom: "max(20px, env(safe-area-inset-bottom))",
-
           justifyContent: "center",
         }}>
         <Box sx={{width: "100%", maxWidth: "1000px"}}>
