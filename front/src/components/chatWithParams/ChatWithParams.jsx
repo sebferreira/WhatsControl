@@ -23,8 +23,8 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100svh",
         width: "100%",
+        height: "100%",
         overflow: "hidden",
       }}>
       <Box

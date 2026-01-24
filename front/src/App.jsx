@@ -86,14 +86,13 @@ function App() {
                 <>
                   <main
                     style={{
-                      height: "100svh",
+                      height: "100vh",
                       width: "100vw",
                       display: "flex",
                       flexDirection: "column",
                       overflow: "hidden",
                       objectFit: "cover",
                     }}>
-                    {" "}
                     <ChatPage />
                   </main>
                 </>
@@ -103,7 +102,7 @@ function App() {
               path="/chats/:chatId"
               element={
                 <>
-                  <main
+                  {/*  <main
                     style={{
                       height: "100svh",
                       backgroundRepeat: "no-repeat",
@@ -117,7 +116,6 @@ function App() {
                       justifyContent: "flex-start",
                       width: "100vw",
                     }}>
-                    {/*  <Navbar /> */}
                     <div
                       style={{
                         flex: 1,
@@ -125,6 +123,32 @@ function App() {
                         flexDirection: "column",
                         overflow: "hidden",
                         minHeight: 0,
+                      }}> */}
+                  <main
+                    style={{
+                      // 1. DIMENSIONES MAESTRAS
+                      height: "100dvh", // Dynamic Viewport Height (Mejor que svh para apps completas)
+                      width: "100%", // % evita el scroll horizontal
+
+                      // 2. LAYOUT FLEX
+                      display: "flex",
+                      flexDirection: "column",
+
+                      // 3. LIMPIEZA
+                      overflow: "hidden", // Nada sale de aquí
+                      margin: 0,
+                      padding: 0,
+                      position: "fixed", // Truco: Fija el main a la pantalla para evitar rebotes en móvil
+                      top: 0,
+                      left: 0,
+                    }}>
+                    {/* El div intermedio también debe llenar, no definir altura propia */}
+                    <div
+                      style={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                        overflow: "hidden",
                       }}>
                       <ChatPage />
                     </div>

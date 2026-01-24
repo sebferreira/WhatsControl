@@ -27,7 +27,7 @@ export function ChatInput() {
         justifyContent: "center",
         marginLeft: "1rem",
         padding: {sm: "1rem", xs: "0 0 1rem 0"},
-        width: {xs: "90% ", md: "calc(100% - 200px)"},
+        width: "90% ",
       }}>
       <form
         onSubmit={onSubmit}
