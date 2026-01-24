@@ -19,17 +19,16 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://whats-control.vercel.app",
     methods: ["GET", "POST"],
   },
 });
 app.use(
   cors({
     credentials: true,
-    origin: "https://poloweb.vercel.app",
-    origin: "http://localhost:5173",
+    origin: "https://whats-control.vercel.app",
     methods: "GET,OPTIONS,PUT,PATCH,POST,DELETE",
-  })
+  }),
 );
 
 app.use(morgan("dev"));
