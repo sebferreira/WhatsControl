@@ -19,14 +19,14 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://whats-control.vercel.app",
+    origin: "https://whatscontrol.vercel.app",
     methods: ["GET", "POST"],
   },
 });
 app.use(
   cors({
     credentials: true,
-    origin: "https://whats-control.vercel.app",
+    origin: "https://whatscontrol.vercel.app",
     methods: "GET,OPTIONS,PUT,PATCH,POST,DELETE",
   }),
 );
