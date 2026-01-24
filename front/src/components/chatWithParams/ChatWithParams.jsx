@@ -100,27 +100,14 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           display: mostrar,
 
-          // Ajustes de Espaciado Vertical
-          paddingTop: "15px", // Un poco más de aire arriba
-          paddingBottom: "max(15px, env(safe-area-inset-bottom))", // Aire abajo
+          paddingTop: "15px",
+          paddingBottom: "max(15px, env(safe-area-inset-bottom))",
 
-          // CENTRADO
+          paddingLeft: {xs: "10px", md: "40px"},
+          paddingRight: {xs: "10px", md: "40px"},
           justifyContent: "center",
-          alignItems: "center", // Centrado vertical por si acaso
         }}>
-        {/* CAJA LIMITADORA (Hace que se vea compacto en PC) */}
-        <Box
-          sx={{
-            width: "100%",
-            // En PC limitamos el ancho a 700px o 800px para que se vea estético
-            maxWidth: {xs: "100%", md: "800px"},
-
-            // Márgenes laterales para que no toque los bordes en ninguna pantalla
-            paddingX: "20px",
-          }}>
-          {" "}
-          <ChatInput />
-        </Box>
+        <ChatInput />
       </Box>
     </Box>
   );
