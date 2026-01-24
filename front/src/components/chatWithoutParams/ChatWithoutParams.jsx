@@ -12,16 +12,10 @@ export function ChatWithoutParams({chats, mensajes}) {
       <Box
         component="nav"
         sx={{
-          /* display: "flex",
-          justifyContent: "flex-end",
-          flexDirection: {xs: "column", md: "row"},
-          flexShrink: 0,
-          width: "100%",
-          zIndex: 1100,
-          backgroundColor: "#19181d", */
           display: "flex",
           justifyContent: "flex-start",
           flexDirection: "column",
+          top: 0,
           flexShrink: 0,
           width: "100%",
           zIndex: 1100,

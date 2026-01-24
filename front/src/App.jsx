@@ -87,7 +87,7 @@ function App() {
                   <main
                     style={{
                       objectFit: "cover",
-                      height: "100dvh",
+                      height: "100svh",
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "69%",
                       backgroundAttachment: "scroll",

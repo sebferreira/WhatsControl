@@ -23,7 +23,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100dvh",
+        height: "100svh",
         width: "100%",
         overflow: "hidden",
       }}>
@@ -72,7 +72,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
             // Ancho del drawer container
             width: {md: "400px", lg: "500px", xl: "560px"},
             flexShrink: 0,
-
+            overflow: "hidden",
             "& .MuiDrawer-paper": {
               // Estilos del papel interno
               width: {md: "400px", lg: "500px", xl: "560px"},
