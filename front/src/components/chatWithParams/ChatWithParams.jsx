@@ -118,20 +118,32 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         }}>
         <ChatInput />
       </Box> */}
-      <Box
+      {/*  <Box
         sx={{
           width: {xs: "100%", md: "auto"},
           marginLeft: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
           display: mostrar,
           flexShrink: 0,
-          marginTop: "auto" /* 
-          backgroundColor: "#19181d", */,
+          marginTop: "auto",
           borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.5)",
           zIndex: 10,
           padding: "10px",
           paddingLeft: {xs: "10px", md: "0"},
           paddingBottom: "max(10px, env(safe-area-inset-bottom))",
+          justifyContent: "center",
+        }}>
+        <Box sx={{width: "100%", maxWidth: "1000px"}}> */}
+      <Box
+        sx={{
+          // ... otros estilos ...
+          zIndex: 10,
+          padding: "10px",
+          paddingLeft: {xs: "10px", md: "0"},
+
+          // CAMBIO: Aumenta el mínimo de 10px a 16px o 20px
+          paddingBottom: "max(20px, env(safe-area-inset-bottom))",
+
           justifyContent: "center",
         }}>
         <Box sx={{width: "100%", maxWidth: "1000px"}}>
