@@ -16,6 +16,8 @@ export function ChatWithoutParams({chats, mensajes}) {
           justifyContent: "flex-start",
           flexDirection: {xs: "column", md: "row"},
           flexShrink: 0,
+          position: "fixed",
+          width: "inherit",
         }}>
         <Navbar />
       </Box>

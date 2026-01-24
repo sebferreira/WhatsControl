@@ -34,6 +34,10 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           justifyContent: "flex-end",
           flexDirection: {xs: "column", md: "row"},
           flexShrink: 0,
+          position: "sticky",
+          top: 0,
+          zIndex: 1100,
+          width: "inherit",
         }}>
         <Navbar />
         <NavbarChat chats={chats} />
