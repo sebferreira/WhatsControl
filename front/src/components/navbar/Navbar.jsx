@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <>
       <AppBar
-        /*    position="static" */
+        position="static"
         sx={{
           boxShadow: "0",
           background: "linear-gradient(135deg, #1E3A8A, #2563EB)",

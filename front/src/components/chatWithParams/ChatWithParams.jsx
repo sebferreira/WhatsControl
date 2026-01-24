@@ -21,9 +21,14 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
   return (
     <Box
       sx={{
-        display: "flex",
+        /* display: "flex",
         flexDirection: "column",
         height: "100%",
+        width: "100%",
+        overflow: "hidden", */ display: "flex",
+        flexDirection: "column",
+        // 1. LA CLAVE: Altura fija a la pantalla y sin scroll global
+        height: "100dvh",
         width: "100%",
         overflow: "hidden",
       }}>
@@ -31,12 +36,11 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         component="nav"
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
-          flexDirection: {xs: "column", md: "row"},
+          justifyContent: "flex-start",
+          flexDirection: "column",
           flexShrink: 0,
           width: "100%",
           zIndex: 1100,
-          backgroundColor: "#19181d",
         }}>
         <Navbar />
         <NavbarChat chats={chats} />
@@ -74,7 +78,7 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         </Drawer>
         <MessageSection mensajes={mensajes} />
       </Box>
-      <Box
+      {/*  <Box
         sx={{
           width: {xs: "100vw", md: "auto"},
           maxWidth: "100vw",
@@ -87,9 +91,31 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           boxShadow: " 0px 4px 10px rgba(0, 0, 0, 0.7)",
           flexShrink: 0,
           padding: "10px",
+          paddingLeft: "0",
           paddingBottom: "max(10px, env(safe-area-inset-bottom))",
         }}>
         <ChatInput />
+      </Box> */}
+      <Box
+        sx={{
+          width: {xs: "100%", md: "auto"},
+          marginLeft: {xs: 0, md: "400px", lg: "500px", xl: "560px"},
+          display: mostrar,
+          flexShrink: 0,
+          marginTop: "auto",
+          backgroundColor: "#19181d",
+          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow: "0px -4px 10px rgba(0, 0, 0, 0.5)",
+          zIndex: 10,
+          padding: "10px",
+          paddingLeft: {xs: "10px", md: "0"},
+          paddingBottom: "max(10px, env(safe-area-inset-bottom))",
+          justifyContent: "center",
+        }}>
+        <Box sx={{width: "100%", maxWidth: "1000px"}}>
+          {" "}
+          <ChatInput />
+        </Box>
       </Box>
     </Box>
   );
