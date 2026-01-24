@@ -75,32 +75,28 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
         </Drawer>
         <MessageSection mensajes={mensajes} />
       </Box>
-      {/*  <Box
+      {/* <Box
         sx={{
           flexShrink: 0,
           width: "100%",
           backgroundColor: "#19181d",
           borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-          display: mostrar,
           paddingTop: "15px",
           paddingBottom: "max(15px, env(safe-area-inset-bottom))",
+          display: mostrar ? "flex" : "none",
           justifyContent: "center",
-          alignItems: "center",
         }}>
         <Box
           sx={{
             width: "100%",
-            maxWidth: {xs: "100%", md: "800px"},
-            paddingX: "20px",
-          }}> */}
-      {/* SECCIÓN DEL INPUT (Fija abajo) */}
-      <Box
+            paddingX: {xs: "10px", md: "4rem"},
+          }}> */} 
+           <Box
         sx={{
           flexShrink: 0,
-          width: "100%",
           backgroundColor: "#19181d",
           borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-
+          
           // Ajustes de Espaciado Vertical
           paddingTop: "15px",
           paddingBottom: "max(15px, env(safe-area-inset-bottom))",
@@ -108,21 +104,37 @@ export const ChatWithParams = memo(function ChatWithParams({chats, mensajes}) {
           // Aseguramos que se muestre según tu lógica
           display: mostrar ? "flex" : "none",
           justifyContent: "center",
-        }}>
-        {/* CAJA CONTENEDORA */}
+
+          // 🔥 AQUÍ ESTÁ LA SOLUCIÓN DEL MARGEN 🔥
+          // 1. Empujamos la caja a la derecha según el tamaño del Drawer en cada pantalla
+          marginLeft: { 
+            xs: 0,        // Móvil: Sin margen (ocupa todo)
+            md: "400px",  // PC Chica: Deja espacio al drawer
+            lg: "500px",  // PC Mediana
+            xl: "560px"   // PC Grande
+          },
+
+          // 2. Ajustamos el ancho para que no se salga de la pantalla
+          width: { 
+            xs: "100%",   // Móvil: Todo el ancho
+            md: "auto"    // PC: "Lo que sobre" (Automático al tener margen)
+          },
+        }}
+      >
+        {/* CAJA CONTENEDORA INTERNA */}
         <Box
           sx={{
-            // 1. OCUPAR TODO EL ANCHO
+            // Ocupar todo el ancho disponible dentro del espacio azul (derecha)
             width: "100%",
 
-            // 2. ELIMINAR EL LIMITE DE 800PX
-            // Quitamos maxWidth o lo ponemos en '100%'
-
-            // 3. MÁRGENES LATERALES RESPONSIVE
-            // Celular (xs): 10px de cada lado (aprovecha espacio)
-            // PC (md): 4rem (aprox 64px) de cada lado para que se vea elegante y centrado
-            paddingX: {xs: "10px", md: "4rem"},
-          }}>
+            // Márgenes laterales estéticos (para que el input no toque los bordes)
+            // En PC le damos más aire (4rem), en celular menos (10px)
+            paddingX: { xs: "10px", md: "4rem" },
+          }}
+        >
+          <ChatInput />
+        </Box>
+      </Box>
           {" "}
           <ChatInput />
         </Box>
