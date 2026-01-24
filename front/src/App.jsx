@@ -91,8 +91,12 @@ function App() {
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "69%",
                       backgroundAttachment: "scroll",
+                      display: "flex",
+                      flexDirection: "column",
                       overflow: "hidden",
-                      justifyContent: "center",
+                      margin: 0,
+                      padding: 0,
+                      justifyContent: "flex-start",
                       width: "100vw",
                     }}>
                     {" "}
