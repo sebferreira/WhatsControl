@@ -68,7 +68,6 @@ function App() {
                       backgroundAttachment: "scroll",
                       overflow: "hidden",
                       justifyContent: "center",
-                      /*   backgroundColor: "#fff", */
                       width: "100vw",
                     }}>
                     {" "}
@@ -102,28 +101,6 @@ function App() {
               path="/chats/:chatId"
               element={
                 <>
-                  {/*  <main
-                    style={{
-                      height: "100svh",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "69%",
-                      backgroundAttachment: "scroll",
-                      display: "flex",
-                      flexDirection: "column",
-                      overflow: "hidden",
-                      margin: 0,
-                      padding: 0,
-                      justifyContent: "flex-start",
-                      width: "100vw",
-                    }}>
-                    <div
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        overflow: "hidden",
-                        minHeight: 0,
-                      }}> */}
                   <main
                     style={{
                       height: "100dvh",
